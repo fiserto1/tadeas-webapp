@@ -28,10 +28,14 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.springframework.boot:spring-boot-starter-web") //contains thymeleaf dependency
+    compile("org.springframework.boot:spring-boot-starter-undertow") //replaces tomcat
+    compile("org.springframework.boot:spring-boot-devtools") //I don't know this
+
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
