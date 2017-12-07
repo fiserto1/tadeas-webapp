@@ -39,3 +39,8 @@ dependencies {
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
+
+//Exclude Tomcat
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+}
