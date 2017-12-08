@@ -33,9 +33,14 @@ repositories {
 }
 
 dependencies {
+//    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-web") //contains thymeleaf dependency
     compile("org.springframework.boot:spring-boot-starter-undertow") //replaces tomcat
     compile("org.springframework.boot:spring-boot-devtools") //I don't know this
+
+    //web
+    compile("org.webjars:bootstrap:3.3.7")
+    compile("org.webjars:jquery:3.2.1")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

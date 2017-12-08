@@ -1,5 +1,8 @@
 package hello;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,10 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class GreetingController {
 
+    @Autowired
+    MessageSource messageSource;
+
     @RequestMapping("/greeting")
     public @ResponseBody String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
-        return "greeting";
+        return messageSource.getMessage("greeting", null, LocaleContextHolder.getLocale());
     }
 
 }
