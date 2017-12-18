@@ -41,6 +41,13 @@ public class WebController {
         return "login";
     }
 
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "redirect:login";
+    }
+
+
 //    @PostMapping("/login")
 //    public String loginSend(@Valid @ModelAttribute("form") Login login, final BindingResult bindingResult, Model model) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 //        if (bindingResult.hasErrors()) {
