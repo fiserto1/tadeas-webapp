@@ -15,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -63,6 +64,9 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
             if (e.getStatusCode() == HttpStatus.FORBIDDEN) {
                 throw new BadCredentialsException("1000");
             }
+            throw new AuthenticationServiceException("Api Error");
+        }
+        catch (RestClientException e) {
             throw new AuthenticationServiceException("Api Error");
         }
 
