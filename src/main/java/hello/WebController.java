@@ -34,11 +34,12 @@ public class WebController {
         return "greeting";
     }
 
-//    @GetMapping("/login")
-//    public String login(Model model) {
-//        model.addAttribute("form", new Login());
-//        return "login";
-//    }
+
+
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
 
 //    @PostMapping("/login")
 //    public String loginSend(@Valid @ModelAttribute("form") Login login, final BindingResult bindingResult, Model model) throws NoSuchAlgorithmException, UnsupportedEncodingException {
