@@ -1,11 +1,13 @@
 package hello;
 
+import hello.bussiness.endpoints.UserEndopoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ public class WebController {
 
     @RequestMapping(value = {"", "/", "index"})
     public String index(String name, Model model) {
+        UserEndopoint user = (UserEndopoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info(user.toString());
         return "index";
     }
 
