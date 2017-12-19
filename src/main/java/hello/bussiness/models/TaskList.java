@@ -4,7 +4,6 @@ import hello.bussiness.endpoints.DeliveryEndpoint;
 import hello.bussiness.endpoints.DeliveryWindowEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -24,10 +23,6 @@ import java.util.Map;
 public class TaskList  implements TaskListI {
 
     private static final Logger log = LoggerFactory.getLogger(TaskList.class);
-
-
-    @Autowired
-    private BeanFactory beanFactory;
 
     private List<TaskWindowI> windows;
 

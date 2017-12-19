@@ -55,7 +55,7 @@ public class DeliveryEndpoint {
         this.deliveryDate = deliveryDate;
     }
 
-    public boolean isValid() {
+    public Boolean isValid() {
         return valid;
     }
 
@@ -63,7 +63,7 @@ public class DeliveryEndpoint {
         this.valid = valid;
     }
 
-    public int getDeliveryUser() {
+    public Integer getDeliveryUser() {
         return deliveryUser;
     }
 
@@ -79,7 +79,7 @@ public class DeliveryEndpoint {
         this.acceptanceDate = acceptanceDate;
     }
 
-    public int getAcceptanceUser() {
+    public Integer getAcceptanceUser() {
         return acceptanceUser;
     }
 
@@ -103,7 +103,7 @@ public class DeliveryEndpoint {
         this.acceptanceBinary = acceptanceBinary;
     }
 
-    public boolean isAcceptation() {
+    public Boolean isAcceptation() {
         return acceptation;
     }
 

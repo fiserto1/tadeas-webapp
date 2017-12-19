@@ -15,7 +15,7 @@ public class UserEndpoint {
         private String email;
         private String role;
         private List<GroupEndpoint> groups;
-        protected String sessionKey;
+        protected String sessionId;
 
         public UserEndpoint() {
         }
@@ -76,12 +76,12 @@ public class UserEndpoint {
             this.groups = groups;
         }
 
-        public String getSessionKey() {
-            return sessionKey;
+        public String getSessionId() {
+            return sessionId;
         }
 
-        public void setSessionKey(String sessionKey) {
-            this.sessionKey = sessionKey;
+        public void setSessionId(String sessionId) {
+            this.sessionId = sessionId;
         }
 
     @Override
@@ -94,7 +94,7 @@ public class UserEndpoint {
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 ", groups=" + groups +
-                ", sessionKey='" + sessionKey + '\'' +
+                ", sessionKey='" + sessionId + '\'' +
                 '}';
     }
 }

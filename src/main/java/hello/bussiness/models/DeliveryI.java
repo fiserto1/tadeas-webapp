@@ -16,11 +16,11 @@ public interface DeliveryI {
 
     public void setDeliveryDate(Date deliveryDate);
 
-    public boolean isValid();
+    public Boolean isValid();
 
     public void setValid(boolean valid);
 
-    public int getDeliveryUser();
+    public Integer getDeliveryUser();
 
     public void setDeliveryUser(int deliveryUser);
 
@@ -28,7 +28,7 @@ public interface DeliveryI {
 
     public void setAcceptanceDate(Date acceptanceDate);
 
-    public int getAcceptanceUser();
+    public Integer getAcceptanceUser();
 
     public void setAcceptanceUser(int acceptanceUser) ;
 
@@ -40,7 +40,7 @@ public interface DeliveryI {
 
     public void setAcceptanceBinary(String acceptanceBinary) ;
 
-    public boolean isAccepted();
+    public Boolean isAccepted();
 
     public boolean isEvaluated();
 

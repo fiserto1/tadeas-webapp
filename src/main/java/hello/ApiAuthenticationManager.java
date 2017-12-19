@@ -46,7 +46,7 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
         }
         String loginUrl = null;
         try {
-            loginUrl = url + "users/login/?username=" + URLEncoder.encode(username, String.valueOf(StandardCharsets.UTF_8)) + "&password=" + hash;
+            loginUrl = url + "user/login/?username=" + URLEncoder.encode(username, String.valueOf(StandardCharsets.UTF_8)) + "&password=" + hash;
         } catch (UnsupportedEncodingException e) {
             throw new AuthenticationServiceException(e.getMessage());
         }
