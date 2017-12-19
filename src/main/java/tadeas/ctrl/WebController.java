@@ -1,8 +1,5 @@
 package tadeas.ctrl;
 
-import tadeas.data.SessionKeyI;
-import tadeas.data.TaskWindowI;
-import tadeas.data.RoleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -12,10 +9,19 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import tadeas.data.RoleType;
+import tadeas.data.SessionKeyI;
+import tadeas.data.TaskWindowI;
+import tadeas.form.Evaluation;
 import tadeas.service.TaskWindowServiceI;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -94,6 +100,34 @@ public class WebController {
 
         log.info("Task confirmed: TaskId: {}.", deliveryId);
         return index(name, model, request);
+    }
+
+    @GetMapping(value = {"/evaluateDelivery"}, params = {"id"})
+    public String evaluateTask(Evaluation evaluation, Model model, HttpServletRequest request) {
+        if (!request.isUserInRole(RoleType.ROLE_TEACHER.name())) {
+            //not authorized
+            log.error("User does not have role: {}.", RoleType.ROLE_TEACHER);
+            return "redirect:/index";
+        }
+
+
+        int deliveryId = Integer.parseInt(request.getParameter("id"));
+        log.info("Delivery confirmed: DeliveryId: {}.", deliveryId);
+
+        model.addAttribute("form", new Evaluation());
+
+        return "evaluation";
+    }
+
+    @PostMapping(value = {"/evaluateDelivery"}, params = {"id"})
+    public String evaluateTaskResult(@Valid @ModelAttribute("form") Evaluation evaluation, final BindingResult bindingResult, Model data){
+        log.info("HERERERE");
+        System.out.println("hey there");
+        if (bindingResult.hasErrors()) {
+            return "evaluation";
+        }
+
+        return "redirect:index";
     }
 
     @RequestMapping("/greeting")

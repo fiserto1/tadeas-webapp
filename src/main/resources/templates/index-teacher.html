@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3" th:unless="${delivery.isAccepted()}">
-                    <a th:href="@{/}" class="btn btn-primary btn-sm" th:text="#{task.evaluate}"></a>
+                    <a th:href="@{/evaluateDelivery(id=${delivery.id})}" class="btn btn-primary btn-sm" th:text="#{task.evaluate}"></a>
                 </div>
             </div>
         </div>
