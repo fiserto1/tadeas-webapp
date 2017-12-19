@@ -1,3 +1,12 @@
 p {
     color: cornflowerblue;
 }
+
+.even{
+    background-color: #f5f5f5;
+}
+
+
+.delivery-list{
+    line-height: 3em;
+}
