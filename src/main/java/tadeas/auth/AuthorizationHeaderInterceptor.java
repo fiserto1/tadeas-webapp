@@ -12,7 +12,7 @@ import java.io.IOException;
 public class AuthorizationHeaderInterceptor implements ClientHttpRequestInterceptor {
     private String token;
 
-    public AuthorizationHeaderInterceptor(String token){
+    public AuthorizationHeaderInterceptor(String token) {
         this.token = token;
     }
 

@@ -17,7 +17,7 @@ public class Delivery implements DeliveryI {
     private String acceptanceBinary;
     private Boolean acceptation;
 
-    public Delivery(DeliveryDTO endpoint){
+    public Delivery(DeliveryDTO endpoint) {
         this.id = endpoint.getId();
         this.solution = endpoint.getSolution();
         this.deliveryDate = endpoint.getDeliveryDate();

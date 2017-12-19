@@ -15,7 +15,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-1 col-md-offset-10 col-xs-12 text-center">
-            <h4><a th:href="@{/logout}" th:title="#{logout.logoutTolltip}" data-toggle="tooltip" data-placement="bottom"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+            <h4><a th:href="@{/logout}" th:title="#{logout.logoutTolltip}" data-toggle="tooltip"
+                   data-placement="bottom"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
             </h4>
         </div>
     </div>
@@ -25,7 +26,8 @@
         <th th:text="#{task.name}"></th>
         <th th:text="#{task.deadline}"></th>
         <th th:text="#{task.solution}"></th>
-        <th th:text="#{task.acceptance}"</th>
+        <th th:text="#{task.acceptance}"
+        </th>
         </thead>
         <tbody>
         <div class="alert alert-danger" role="alert" th:if="${alertError}" th:text="#{delivery.confirm.error}"></div>
@@ -36,26 +38,43 @@
             <td th:text="${#dates.format(task.deadlineDate, #messages.msg('dateformat'))}"></td>
             <td th:with="delivery=${task.lastDelivery}">
                 <a th:href="${delivery.solution}">
-                    <span class="glyphicon glyphicon-download" aria-hidden="true" th:title="#{task.delivered} + ${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}" data-placement="bottom" data-toggle="tooltip"></span>
+                    <span class="glyphicon glyphicon-download" aria-hidden="true"
+                          th:title="#{task.delivered} + ${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}"
+                          data-placement="bottom" data-toggle="tooltip"></span>
                 </a>
                 <!--TODO set valid url to accept solution maybe use modal-->
-                <a th:unless="${delivery.isValid()}" class="btn btn-primary btn-xs" th:href="@{/confirmTask(id=${delivery.id})}" th:title="#{task.setValid}" data-placement="bottom" data-toggle="tooltip">
+                <a th:unless="${delivery.isValid()}" class="btn btn-primary btn-xs"
+                   th:href="@{/confirmTask(id=${delivery.id})}" th:title="#{task.setValid}" data-placement="bottom"
+                   data-toggle="tooltip">
                     <span class="glyphicon glyphicon-envelope"></span>
                 </a>
             </td>
             <td th:if="${task.lastDelivery.isEvaluated()}">
                 <a href="#" data-toggle="modal" th:attr="data-target='#deliverymodalid-'+${task.lastDelivery.id}">
-                    <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" th:if="${task.isAccepted()}"></span>
-                    <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true" th:unless="${task.isAccepted()}"></span>
+                    <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"
+                          th:if="${task.isAccepted()}"></span>
+                    <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"
+                          th:unless="${task.isAccepted()}"></span>
                 </a>
-                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" th:id="'deliverymodalid-'+${task.lastDelivery.id}">
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+                     aria-labelledby="mySmallModalLabel" th:id="'deliverymodalid-'+${task.lastDelivery.id}">
                     <div class="modal-dialog modal-sm" role="document">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <p th:if="${task.lastDelivery.acceptanceUser}"><strong th:text="#{task.acceptanceUser}+': '"></strong><span th:text="${task.lastDelivery.acceptanceUser}"></span></p>
-                                <p th:if="${task.lastDelivery.acceptanceMessage}"><strong th:text="#{task.acceptanceMessage}+': '"></strong><span th:text="${task.lastDelivery.acceptanceMessage}"></span></p>
-                                <p th:if="${task.lastDelivery.acceptanceDate}"><strong th:text="#{task.acceptanceDate}+': '"></strong><a th:href="${task.lastDelivery.acceptanceBinary}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a></p>
-                                <p th:if="${task.lastDelivery.acceptanceBinary}"><strong th:text="#{task.acceptanceBinary}+': '"></strong><span th:text="${#dates.format(task.lastDelivery.acceptanceDate, #messages.msg('dateformat'))}"></span></p>
+                                <p th:if="${task.lastDelivery.acceptanceUser}"><strong
+                                        th:text="#{task.acceptanceUser}+': '"></strong><span
+                                        th:text="${task.lastDelivery.acceptanceUser}"></span></p>
+                                <p th:if="${task.lastDelivery.acceptanceMessage}"><strong
+                                        th:text="#{task.acceptanceMessage}+': '"></strong><span
+                                        th:text="${task.lastDelivery.acceptanceMessage}"></span></p>
+                                <p th:if="${task.lastDelivery.acceptanceDate}"><strong
+                                        th:text="#{task.acceptanceDate}+': '"></strong><a
+                                        th:href="${task.lastDelivery.acceptanceBinary}"><span
+                                        class="glyphicon glyphicon-download" aria-hidden="true"></span></a></p>
+                                <p th:if="${task.lastDelivery.acceptanceBinary}"><strong
+                                        th:text="#{task.acceptanceBinary}+': '"></strong><span
+                                        th:text="${#dates.format(task.lastDelivery.acceptanceDate, #messages.msg('dateformat'))}"></span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -68,13 +87,13 @@
         </tbody>
     </table>
 
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-    $(".alert").fadeTo(15000, 500).slideUp(1000, function(){
-        $(".alert").alert('close');
-    });
-</script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        $(".alert").fadeTo(15000, 500).slideUp(1000, function () {
+            $(".alert").alert('close');
+        });
+    </script>
 </body>
 </html>

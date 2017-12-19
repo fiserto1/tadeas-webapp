@@ -29,19 +29,17 @@ public class TaskWindowService implements TaskWindowServiceI {
 
     private static final Logger log = LoggerFactory.getLogger(TaskWindowService.class);
 
-    private List<TaskWindowI> windows;
-
     @Autowired
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Value("${backend.url}")
     private String url;
 
     public List<TaskWindowI> getWindows() {
         Map<Integer, List<DeliveryI>> deliveries = this.scrapeDelivery();
-        this.windows = scrapeWindows();
-        for (TaskWindowI task: this.windows){
-            if (deliveries.containsKey(task.getId())){
+        List<TaskWindowI> windows = scrapeWindows();
+        for (TaskWindowI task : windows) {
+            if (deliveries.containsKey(task.getId())) {
                 task.setDeliveries(deliveries.get(task.getId()));
             }
         }
@@ -64,35 +62,29 @@ public class TaskWindowService implements TaskWindowServiceI {
         }
     }
 
-    public TaskWindowService(){
-    }
-
-
-    private List<TaskWindowI> scrapeWindows(){
+    private List<TaskWindowI> scrapeWindows() {
         String windowsUrl = url + "windows";
         ResponseEntity<DeliveryWindowDTO[]> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowDTO[].class);
         DeliveryWindowDTO[] windows = responseEntity.getBody();
         List<TaskWindowI> result = new ArrayList<>();
-        for (DeliveryWindowDTO win: windows){
+        for (DeliveryWindowDTO win : windows) {
             log.info(win.toString());
             result.add(new TaskWindow(win));
         }
         return result;
     }
 
-
-    private Map<Integer, List<DeliveryI>> scrapeDelivery(){
+    private Map<Integer, List<DeliveryI>> scrapeDelivery() {
         String deliveryUrl = url + "delivery";
         ResponseEntity<DeliveryDTO[]> responseDelivery = restTemplate.getForEntity(deliveryUrl, DeliveryDTO[].class);
         DeliveryDTO[] delivery = responseDelivery.getBody();
         Map<Integer, List<DeliveryI>> result = new HashMap<>();
-        for (DeliveryDTO deli: delivery){
+        for (DeliveryDTO deli : delivery) {
             log.info(deli.toString());
             int windowsId = deli.getTaskDeliveryWindow().getId();
-            if (result.containsKey(windowsId)){
+            if (result.containsKey(windowsId)) {
                 result.get(windowsId).add(new Delivery(deli));
-            }
-            else {
+            } else {
                 List<DeliveryI> delis = new ArrayList<>();
                 delis.add(new Delivery(deli));
                 result.put(windowsId, delis);
@@ -100,7 +92,4 @@ public class TaskWindowService implements TaskWindowServiceI {
         }
         return result;
     }
-
-
-
 }

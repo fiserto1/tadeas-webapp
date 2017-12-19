@@ -12,29 +12,30 @@
 </head>
 <body>
 <div class="container">
-<div class="alert alert-danger" role="alert" th:if="${badCredentials}" th:text="#{login.badPassword}"></div>
-<h2 th:text="#{greeting}"></h2>
-<div class="col-md-6">
-    <form th:action="'#'" th:object="${form}" method="post">
-        <div class="checkbox" th:classappend="${#fields.hasErrors('acceptance')} ? 'has-error'">
-            <label th:inline="text">
-                <input type="checkbox" th:field="*{acceptance}">[[#{evaluation.acceptance}]]
-            </label>
-        </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('acceptanceMessage')} ? 'has-error'">
-            <label for="acceptanceMessage" th:text="#{evaluation.acceptanceMessage}">:</label>
-            <input type="password" class="form-control" th:field="*{acceptanceMessage}">
-            <span id="password-help" class="help-block" th:if="${#fields.hasErrors('acceptanceMessage')}" th:errors="*{acceptanceMessage}">AcceptanceMessage error message.</span>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary" th:text="#{login.button}"></button>
-        </div>
-        </table>
-    </form>
-    <form method="get">
+    <div class="alert alert-danger" role="alert" th:if="${badCredentials}" th:text="#{login.badPassword}"></div>
+    <h2 th:text="#{greeting}"></h2>
+    <div class="col-md-6">
+        <form th:action="'#'" th:object="${form}" method="post">
+            <div class="checkbox" th:classappend="${#fields.hasErrors('acceptance')} ? 'has-error'">
+                <label th:inline="text">
+                    <input type="checkbox" th:field="*{acceptance}">[[#{evaluation.acceptance}]]
+                </label>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('acceptanceMessage')} ? 'has-error'">
+                <label for="acceptanceMessage" th:text="#{evaluation.acceptanceMessage}">:</label>
+                <input type="password" class="form-control" th:field="*{acceptanceMessage}">
+                <span id="password-help" class="help-block" th:if="${#fields.hasErrors('acceptanceMessage')}"
+                      th:errors="*{acceptanceMessage}">AcceptanceMessage error message.</span>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary" th:text="#{login.button}"></button>
+            </div>
+            </table>
+        </form>
+        <form method="get">
 
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 </div>
 

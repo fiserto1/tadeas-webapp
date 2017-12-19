@@ -4,44 +4,44 @@ import java.util.Date;
 
 public interface DeliveryI {
 
-    public int getId() ;
+    int getId();
 
-    public void setId(int id);
+    void setId(int id);
 
-    public String getSolution();
+    String getSolution();
 
-    public void setSolution(String solution);
+    void setSolution(String solution);
 
-    public Date getDeliveryDate();
+    Date getDeliveryDate();
 
-    public void setDeliveryDate(Date deliveryDate);
+    void setDeliveryDate(Date deliveryDate);
 
-    public Boolean isValid();
+    Boolean isValid();
 
-    public void setValid(boolean valid);
+    void setValid(boolean valid);
 
-    public Integer getDeliveryUser();
+    Integer getDeliveryUser();
 
-    public void setDeliveryUser(int deliveryUser);
+    void setDeliveryUser(int deliveryUser);
 
-    public Date getAcceptanceDate();
+    Date getAcceptanceDate();
 
-    public void setAcceptanceDate(Date acceptanceDate);
+    void setAcceptanceDate(Date acceptanceDate);
 
-    public Integer getAcceptanceUser();
+    Integer getAcceptanceUser();
 
-    public void setAcceptanceUser(int acceptanceUser) ;
+    void setAcceptanceUser(int acceptanceUser);
 
-    public String getAcceptanceMessage() ;
+    String getAcceptanceMessage();
 
-    public void setAcceptanceMessage(String acceptanceMessage) ;
+    void setAcceptanceMessage(String acceptanceMessage);
 
-    public String getAcceptanceBinary() ;
+    String getAcceptanceBinary();
 
-    public void setAcceptanceBinary(String acceptanceBinary) ;
+    void setAcceptanceBinary(String acceptanceBinary);
 
-    public Boolean isAccepted();
+    Boolean isAccepted();
 
-    public boolean isEvaluated();
+    boolean isEvaluated();
 
 }

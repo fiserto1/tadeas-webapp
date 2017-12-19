@@ -46,10 +46,10 @@ public class Application implements WebMvcConfigurer {
 
     @Bean
     @RequestScope
-    public SessionKeyI token(){
+    public SessionKeyI token() {
         UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new SessionKey(user.getSessionId());
-    };
+    }
 
 
     @Bean

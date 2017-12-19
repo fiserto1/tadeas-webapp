@@ -15,7 +15,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-1 col-md-offset-10 col-xs-12 text-center">
-            <h4><a th:href="@{/logout}" th:title="#{logout.logoutTolltip}" data-toggle="tooltip" data-placement="bottom"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+            <h4><a th:href="@{/logout}" th:title="#{logout.logoutTolltip}" data-toggle="tooltip"
+                   data-placement="bottom"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
             </h4>
         </div>
     </div>
@@ -23,47 +24,66 @@
     <div class="panel panel-default" th:each="task: ${taskWindows}">
         <div class="panel-heading">
             <div class="row">
-            <div class="col-xs-12 col-sm-6" th:text="${task.task.name}"></div>
-            <div class="col-xs-12 col-sm-6 text-right" th:text="${#dates.format(task.deadlineDate, #messages.msg('dateformat'))}"></div>
+                <div class="col-xs-12 col-sm-6" th:text="${task.task.name}"></div>
+                <div class="col-xs-12 col-sm-6 text-right"
+                     th:text="${#dates.format(task.deadlineDate, #messages.msg('dateformat'))}"></div>
             </div>
         </div>
         <div class="panel-body">
-            <div class="row delivery-list" th:each="delivery, iterStat: ${task.deliveries}" th:classappend="${iterStat.odd}? 'odd' : 'even'">
+            <div class="row delivery-list" th:each="delivery, iterStat: ${task.deliveries}"
+                 th:classappend="${iterStat.odd}? 'odd' : 'even'">
                 <div class="col-xs-12 col-sm-3" th:text="${delivery.deliveryUser}"></div>
-                <div class="col-xs-12 col-sm-3" th:text="${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}"></div>
-                <div class="col-xs-12 col-sm-3"><a th:href="${delivery.solution}"><span class="glyphicon glyphicon-download"></span></a><span class="glyphicon glyphicon-ok" th:if="${delivery.valid}"></span></div>
+                <div class="col-xs-12 col-sm-3"
+                     th:text="${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}"></div>
+                <div class="col-xs-12 col-sm-3"><a th:href="${delivery.solution}"><span
+                        class="glyphicon glyphicon-download"></span></a><span class="glyphicon glyphicon-ok"
+                                                                              th:if="${delivery.valid}"></span></div>
                 <div class="col-xs-12 col-sm-3" th:if="${delivery.isAccepted()}">
                     <a href="#" data-toggle="modal" th:attr="data-target='#deliverymodalid-'+${delivery.id}">
-                        <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" th:if="${delivery.isAccepted()}"></span>
-                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true" th:unless="${delivery.isAccepted()}"></span>
+                        <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"
+                              th:if="${delivery.isAccepted()}"></span>
+                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"
+                              th:unless="${delivery.isAccepted()}"></span>
                     </a>
-                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" th:id="'deliverymodalid-'+${delivery.id}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+                         aria-labelledby="mySmallModalLabel" th:id="'deliverymodalid-'+${delivery.id}">
                         <div class="modal-dialog modal-sm" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <p th:if="${delivery.acceptanceUser}"><strong th:text="#{task.acceptanceUser}+': '"></strong><span th:text="${delivery.acceptanceUser}"></span></p>
-                                    <p th:if="${delivery.acceptanceMessage}"><strong th:text="#{task.acceptanceMessage}+': '"></strong><span th:text="${delivery.acceptanceMessage}"></span></p>
-                                    <p th:if="${delivery.acceptanceDate}"><strong th:text="#{task.acceptanceDate}+': '"></strong><a th:href="${delivery.acceptanceBinary}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a></p>
-                                    <p th:if="${delivery.acceptanceBinary}"><strong th:text="#{task.acceptanceBinary}+': '"></strong><span th:text="${#dates.format(delivery.acceptanceDate, #messages.msg('dateformat'))}"></span></p>
+                                    <p th:if="${delivery.acceptanceUser}"><strong
+                                            th:text="#{task.acceptanceUser}+': '"></strong><span
+                                            th:text="${delivery.acceptanceUser}"></span></p>
+                                    <p th:if="${delivery.acceptanceMessage}"><strong
+                                            th:text="#{task.acceptanceMessage}+': '"></strong><span
+                                            th:text="${delivery.acceptanceMessage}"></span></p>
+                                    <p th:if="${delivery.acceptanceDate}"><strong
+                                            th:text="#{task.acceptanceDate}+': '"></strong><a
+                                            th:href="${delivery.acceptanceBinary}"><span
+                                            class="glyphicon glyphicon-download" aria-hidden="true"></span></a></p>
+                                    <p th:if="${delivery.acceptanceBinary}"><strong
+                                            th:text="#{task.acceptanceBinary}+': '"></strong><span
+                                            th:text="${#dates.format(delivery.acceptanceDate, #messages.msg('dateformat'))}"></span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3" th:unless="${delivery.isAccepted()}">
-                    <a th:href="@{/evaluateDelivery(id=${delivery.id})}" class="btn btn-primary btn-sm" th:text="#{task.evaluate}"></a>
+                    <a th:href="@{/evaluateDelivery(id=${delivery.id})}" class="btn btn-primary btn-sm"
+                       th:text="#{task.evaluate}"></a>
                 </div>
             </div>
         </div>
     </div>
 
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-    $(".alert").fadeTo(15000, 500).slideUp(1000, function(){
-        $(".alert").alert('close');
-    });
-</script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        $(".alert").fadeTo(15000, 500).slideUp(1000, function () {
+            $(".alert").alert('close');
+        });
+    </script>
 </body>
 </html>

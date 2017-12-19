@@ -7,44 +7,44 @@ import java.util.List;
 
 public interface TaskWindowI {
 
-    public int getId();
+    int getId();
 
-    public void setId(int id);
+    void setId(int id);
 
-    public TaskDTO getTask();
+    TaskDTO getTask();
 
-    public void setTask(TaskDTO task);
+    void setTask(TaskDTO task);
 
-    public int getIssuer();
+    int getIssuer();
 
-    public void setIssuer(int issuer);
+    void setIssuer(int issuer);
 
-    public boolean isActive();
+    boolean isActive();
 
-    public void setActive(boolean active);
+    void setActive(boolean active);
 
-    public Date getIssueDate();
+    Date getIssueDate();
 
-    public void setIssueDate(Date issueDate);
+    void setIssueDate(Date issueDate);
 
-    public Date getStartDate();
+    Date getStartDate();
 
-    public void setStartDate(Date startDate);
+    void setStartDate(Date startDate);
 
-    public Date getDeadlineDate();
+    Date getDeadlineDate();
 
-    public void setDeadlineDate(Date deadlineDate);
+    void setDeadlineDate(Date deadlineDate);
 
-    public String getDefinition();
+    String getDefinition();
 
-    public void setDefinition(String definition);
+    void setDefinition(String definition);
 
-    public List<DeliveryI> getDeliveries();
+    List<DeliveryI> getDeliveries();
 
-    public void setDeliveries(List<DeliveryI> deliveries);
+    void setDeliveries(List<DeliveryI> deliveries);
 
-    public DeliveryI getLastDelivery();
+    DeliveryI getLastDelivery();
 
-    public boolean isAccepted();
+    boolean isAccepted();
 
 }

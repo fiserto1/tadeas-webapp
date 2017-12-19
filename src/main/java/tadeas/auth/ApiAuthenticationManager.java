@@ -55,8 +55,7 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
         } catch (UnsupportedEncodingException e) {
             throw new AuthenticationServiceException(e.getMessage());
         }
-        //        just dummy hopfully we do not need this
-//        List<String> userRights = new ArrayList<>();
+
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
         UserDTO loginResponse = null;
         try {
@@ -76,8 +75,7 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
                 throw new BadCredentialsException("1000");
             }
             throw new AuthenticationServiceException("Api Error");
-        }
-        catch (RestClientException e) {
+        } catch (RestClientException e) {
             throw new AuthenticationServiceException("Api Error");
         }
 
