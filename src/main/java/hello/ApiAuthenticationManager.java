@@ -2,7 +2,7 @@ package hello;
 
 import hello.bussiness.endpoints.UserEndpoint;
 import hello.bussiness.models.RoleType;
-import hello.utills.Md5;
+import hello.util.MD5Util;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,13 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.management.relation.Role;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -43,7 +41,7 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
         RestTemplate restTemplate = new RestTemplate();
         String hash = null;
         try {
-            hash = Md5.md5(password);
+            hash = MD5Util.generateMD5Hash(password);
         } catch (NoSuchAlgorithmException e) {
             throw new AuthenticationServiceException(e.getMessage());
         }

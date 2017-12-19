@@ -101,7 +101,7 @@ public class WebController {
 //            return "login";
 //        }
 //        RestTemplate restTemplate = new RestTemplate();
-//        String hash = Md5.md5(login.getPassword());
+//        String hash = MD5Util.generateMD5Hash(login.getPassword());
 //        log.info(hash);
 //        String loginUrl = url + "users/login/?username=" + URLEncoder.encode(login.getLogin(), String.valueOf(StandardCharsets.UTF_8)) + "&password=" + hash;
 //        log.info(loginUrl);
