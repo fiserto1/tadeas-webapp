@@ -1,7 +1,10 @@
 package hello;
 
+import hello.bussiness.models.TaskList;
+import hello.bussiness.models.TaskWindowI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -9,6 +12,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
 
 @Controller
 public class WebController {
@@ -18,11 +24,35 @@ public class WebController {
     @Autowired
     MessageSource messageSource;
 
+    @Autowired
+    private BeanFactory beanFactory;
+
+    @Autowired
+    TaskList tasksList;
+
+
     @Value("${backend.url}")
     private String url;
 
     @RequestMapping(value = {"", "/", "index"})
     public String index(String name, Model model) {
+        List<TaskWindowI> tasks = tasksList.getWindows();
+//        UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        RestTemplate restTemplate = beanFactory.getBean(RestTemplate.class, user.getSessionKey());
+//        String windowsUrl = url + "windows";
+//        ResponseEntity<DeliveryWindowEndpoint[]> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowEndpoint[].class);
+//        DeliveryWindowEndpoint[] windows = responseEntity.getBody();
+//        String deliveryUrl = url + "delivery";
+//        ResponseEntity<DeliveryEndpoint[]> responseDelivery = restTemplate.getForEntity(deliveryUrl, DeliveryEndpoint[].class);
+//        DeliveryEndpoint[] delivery = responseDelivery.getBody();
+//        for(DeliveryWindowEndpoint win: windows){
+//            log.info(win.toString());
+//        }
+//        for (DeliveryEndpoint deli: delivery){
+//            log.info(deli.toString());
+//        }
+//        log.info(user.toString());
+        model.addAttribute("tasks", tasks);
         return "index";
     }
 
@@ -40,6 +70,13 @@ public class WebController {
     public String login() {
         return "login";
     }
+
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "redirect:login";
+    }
+
 
 //    @PostMapping("/login")
 //    public String loginSend(@Valid @ModelAttribute("form") Login login, final BindingResult bindingResult, Model model) throws NoSuchAlgorithmException, UnsupportedEncodingException {

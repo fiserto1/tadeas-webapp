@@ -1,6 +1,6 @@
 package hello;
 
-import hello.bussiness.endpoints.UserEndopoint;
+import hello.bussiness.endpoints.UserEndpoint;
 import hello.utills.Md5;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,8 +53,9 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
         //        just dummy hopfully we do not need this
 //        List<String> userRights = new ArrayList<>();
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
+        UserEndpoint loginResponse = null;
         try {
-            UserEndopoint loginResponse = restTemplate.getForObject(loginUrl, UserEndopoint.class);
+            loginResponse = restTemplate.getForObject(loginUrl, UserEndpoint.class);
             if (loginResponse.getRole().equals("TeacherTeacher")) {
                 grantedAuths.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
             } else {
@@ -70,7 +71,7 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
             throw new AuthenticationServiceException("Api Error");
         }
 
-        return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
+        return new UsernamePasswordAuthenticationToken(loginResponse, password, grantedAuths);
     }
 
     @Override
