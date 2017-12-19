@@ -1,5 +1,6 @@
 package hello;
 
+import hello.bussiness.models.SessionKeyI;
 import hello.bussiness.models.TaskList;
 import hello.bussiness.models.TaskWindowI;
 import org.slf4j.Logger;
@@ -34,8 +35,12 @@ public class WebController {
     @Value("${backend.url}")
     private String url;
 
+    @Autowired
+    SessionKeyI sesion;
+
     @RequestMapping(value = {"", "/", "index"})
     public String index(String name, Model model) {
+        log.info(sesion.getToken());
         List<TaskWindowI> tasks = tasksList.getWindows();
 //        UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        RestTemplate restTemplate = beanFactory.getBean(RestTemplate.class, user.getSessionKey());
@@ -52,6 +57,9 @@ public class WebController {
 //            log.info(deli.toString());
 //        }
 //        log.info(user.toString());
+        for (TaskWindowI task: tasks){
+            log.info(task.getLastDelivery().isValid().toString());
+        }
         model.addAttribute("tasks", tasks);
         return "index";
     }

@@ -47,7 +47,7 @@ public class Application implements WebMvcConfigurer {
     @RequestScope
     public SessionKeyI token(){
         UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new SessionKey(user.getSessionKey());
+        return new SessionKey(user.getSessionId());
     };
 
 

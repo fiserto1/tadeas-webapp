@@ -20,6 +20,7 @@ public class AuthorizationHeaderInterceptor implements ClientHttpRequestIntercep
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         HttpHeaders headers = request.getHeaders();
         headers.add("Authorization", "Bearer " + token);
+        headers.add("Session-Id", token);
         return execution.execute(request, body);
     }
 }

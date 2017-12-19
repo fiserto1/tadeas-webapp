@@ -24,40 +24,32 @@
         <thead>
         <th th:text="#{task.name}"></th>
         <th th:text="#{task.deadline}"></th>
-        <th th:text="#{task.solved}"></th>
         <th th:text="#{task.solution}"></th>
         <th th:text="#{task.acceptance}"</th>
         </thead>
         <tbody>
         <tr th:each="task: ${tasks}">
             <td th:text="${task.task.name}"></td>
-            <td th:text="${task.deadline}"></td>
-            <td><a th:href="${task.lastDelivery.solution}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a></td>
-            <td th:if="${task.isEvaluated}">
-                <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" th:if="${task.isAccepted}"></span>
-                <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true" th:unless="${task.isAccepted}"></span>
+            <td th:text="${#dates.format(task.deadlineDate, 'dd. MM. yyyy')}"></td>
+            <td th:with="delivery=${task.lastDelivery}">
+                <a th:href="${delivery.solution}">
+                    <span class="glyphicon glyphicon-download" aria-hidden="true" th:title="#{task.delivered} + ${#dates.format(delivery.deliveryDate, 'dd. MM. yyyy')}" data-placement="bottom" data-toggle="tooltip"></span>
+                </a>
+                <!--TODO set valid url to accept solution maybe use modal-->
+                <a th:unless="${delivery.isValid()}" th:href="@{/}" class="btn btn-primary btn-xs" th:title="#{task.setValid}" data-placement="bottom" data-toggle="tooltip">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </a>
+            </td>
+            <td th:if="${task.lastDelivery.isEvaluated()}">
+                <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" th:if="${task.isAccepted()}"></span>
+                <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true" th:unless="${task.isAccepted()}"></span>
+            </td>
+            <td th:unless="${task.lastDelivery.isEvaluated()}">
             </td>
         </tr>
 
         </tbody>
     </table>
-    <div th:text="#{login.label}"><a th:href="/greeting"></a></div>
-    <div class="col-md-6">
-        <form method="get">
-            <div class="form-group">
-                <label for="usr" th:text="#{login.username}">:</label>
-                <input type="text" class="form-control" id="usr">
-            </div>
-            <div class="form-group">
-                <label for="pwd" th:text="#{login.password}">:</label>
-                <input type="password" class="form-control" id="pwd">
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary" th:text="#{login.button}"></button>
-            </div>
-        </form>
-    </div>
-</div>
 
 <script>
     $(function () {
