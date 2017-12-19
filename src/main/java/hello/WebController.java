@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -39,7 +40,7 @@ public class WebController {
     SessionKeyI sesion;
 
     @RequestMapping(value = {"", "/", "index"})
-    public String index(String name, Model model) {
+    public String index(String name, Model model, HttpServletRequest request) {
         log.info(sesion.getToken());
         List<TaskWindowI> tasks = tasksList.getWindows();
 //        UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -61,7 +62,14 @@ public class WebController {
             log.info(task.getLastDelivery().isValid().toString());
         }
         model.addAttribute("tasks", tasks);
-        return "index";
+        if (request.isUserInRole("ROLE_STUDENT")) {
+            return "index-student";
+        }
+        else {
+            return "index-teacher";
+        }
+//        auth.getAuthorities().contains("ROLE")
+
     }
 
     @RequestMapping("/greeting")

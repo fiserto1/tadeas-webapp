@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload System Tadeas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css"/>
+
+    <script type="text/javascript" src="webjars/jquery/3.2.1/jquery.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-1 col-md-offset-10 col-xs-12 text-center">
+            <h4><a th:href="@{/logout}" th:title="#{logout.logoutTolltip}" data-toggle="tooltip" data-placement="bottom"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+            </h4>
+        </div>
+    </div>
+    <h2 th:text="#{greeting}"></h2>
+    <h3>Teacher</h3>
+    <table class="table table-striped table-responsive">
+        <thead>
+        <th th:text="#{task.name}"></th>
+        <th th:text="#{task.deadline}"></th>
+        <th th:text="#{task.solution}"></th>
+        <th th:text="#{task.acceptance}"</th>
+        </thead>
+        <tbody>
+        <tr th:each="task: ${tasks}">
+            <td th:text="${task.task.name}"></td>
+            <td th:text="${#dates.format(task.deadlineDate, #messages.msg('dateformat'))}"></td>
+            <td th:with="delivery=${task.lastDelivery}">
+                <a th:href="${delivery.solution}">
+                    <span class="glyphicon glyphicon-download" aria-hidden="true" th:title="#{task.delivered} + ${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}" data-placement="bottom" data-toggle="tooltip"></span>
+                </a>
+                <!--TODO set valid url to accept solution maybe use modal-->
+                <a th:unless="${delivery.isValid()}" th:href="@{/}" class="btn btn-primary btn-xs" th:title="#{task.setValid}" data-placement="bottom" data-toggle="tooltip">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </a>
+            </td>
+            <td th:if="${task.lastDelivery.isEvaluated()}">
+                <a href="#" data-toggle="modal" th:attr="data-target='#deliverymodalid-'+${task.lastDelivery.id}">
+                    <span class="glyphicon glyphicon-ok text-success" aria-hidden="true" th:if="${task.isAccepted()}"></span>
+                    <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true" th:unless="${task.isAccepted()}"></span>
+                </a>
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" th:id="'deliverymodalid-'+${task.lastDelivery.id}">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p th:if="${task.lastDelivery.acceptanceUser}"><strong th:text="#{task.acceptanceUser}+': '"></strong><span th:text="${task.lastDelivery.acceptanceUser}"></span></p>
+                                <p th:if="${task.lastDelivery.acceptanceMessage}"><strong th:text="#{task.acceptanceMessage}+': '"></strong><span th:text="${task.lastDelivery.acceptanceMessage}"></span></p>
+                                <p th:if="${task.lastDelivery.acceptanceDate}"><strong th:text="#{task.acceptanceDate}+': '"></strong><a th:href="${task.lastDelivery.acceptanceBinary}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a></p>
+                                <p th:if="${task.lastDelivery.acceptanceBinary}"><strong th:text="#{task.acceptanceBinary}+': '"></strong><span th:text="${#dates.format(task.lastDelivery.acceptanceDate, #messages.msg('dateformat'))}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td th:unless="${task.lastDelivery.isEvaluated()}">
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+    $(".alert").fadeTo(15000, 500).slideUp(1000, function(){
+        $(".alert").alert('close');
+    });
+</script>
+</body>
+</html>
