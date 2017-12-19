@@ -1,7 +1,7 @@
-package hello.bussiness.models;
+package tadeas.data;
 
-import hello.bussiness.endpoints.DeliveryWindowEndpoint;
-import hello.bussiness.endpoints.TaskEndpoint;
+import tadeas.dto.DeliveryWindowDTO;
+import tadeas.dto.TaskDTO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TaskWindow implements TaskWindowI{
     private int id;
-    private TaskEndpoint task;
+    private TaskDTO task;
     private int issuer;
     private boolean active;
     private Date issueDate;
@@ -19,7 +19,7 @@ public class TaskWindow implements TaskWindowI{
     private List<DeliveryI> deliveries;
 
 
-    public TaskWindow(DeliveryWindowEndpoint endpoint){
+    public TaskWindow(DeliveryWindowDTO endpoint){
         this.id = endpoint.getId();
         this.task = endpoint.getTask();
         this.issuer = endpoint.getIssuer();
@@ -39,11 +39,11 @@ public class TaskWindow implements TaskWindowI{
         this.id = id;
     }
 
-    public TaskEndpoint getTask() {
+    public TaskDTO getTask() {
         return task;
     }
 
-    public void setTask(TaskEndpoint task) {
+    public void setTask(TaskDTO task) {
         this.task = task;
     }
 

@@ -1,4 +1,4 @@
-package hello;
+package tadeas.auth;
 
 
 import org.springframework.http.HttpHeaders;
@@ -12,7 +12,7 @@ import java.io.IOException;
 public class AuthorizationHeaderInterceptor implements ClientHttpRequestInterceptor {
     private String token;
 
-    AuthorizationHeaderInterceptor(String token){
+    public AuthorizationHeaderInterceptor(String token){
         this.token = token;
     }
 

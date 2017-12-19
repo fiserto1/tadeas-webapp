@@ -1,8 +1,8 @@
-package hello;
+package tadeas.auth;
 
-import hello.bussiness.endpoints.UserEndpoint;
-import hello.bussiness.models.RoleType;
-import hello.util.MD5Util;
+import tadeas.dto.UserDTO;
+import tadeas.data.RoleType;
+import tadeas.util.MD5Util;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -54,9 +54,9 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
         //        just dummy hopfully we do not need this
 //        List<String> userRights = new ArrayList<>();
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
-        UserEndpoint loginResponse = null;
+        UserDTO loginResponse = null;
         try {
-            loginResponse = restTemplate.getForObject(loginUrl, UserEndpoint.class);
+            loginResponse = restTemplate.getForObject(loginUrl, UserDTO.class);
 
             if (loginResponse == null) {
                 throw new AuthenticationServiceException("Response from Backend API is null.");

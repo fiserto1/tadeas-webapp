@@ -1,9 +1,9 @@
-package hello.bussiness.endpoints;
+package tadeas.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GroupEndpoint {
+public class GroupDTO {
     private String id;
     private String name;
 
@@ -25,7 +25,7 @@ public class GroupEndpoint {
 
     @Override
     public String toString() {
-        return "GroupEndpoint{" +
+        return "GroupDTO{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

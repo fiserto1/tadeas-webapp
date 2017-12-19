@@ -1,11 +1,11 @@
-package hello.bussiness.endpoints;
+package tadeas.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserEndpoint {
+public class UserDTO {
 
 
         private Integer id;
@@ -14,10 +14,10 @@ public class UserEndpoint {
         private String lasName;
         private String email;
         private String role;
-        private List<GroupEndpoint> groups;
+        private List<GroupDTO> groups;
         protected String sessionId;
 
-        public UserEndpoint() {
+        public UserDTO() {
         }
 
         public Integer getId() {
@@ -68,11 +68,11 @@ public class UserEndpoint {
             this.role = role;
         }
 
-        public List<GroupEndpoint> getGroups() {
+        public List<GroupDTO> getGroups() {
             return groups;
         }
 
-        public void setGroups(List<GroupEndpoint> groups) {
+        public void setGroups(List<GroupDTO> groups) {
             this.groups = groups;
         }
 

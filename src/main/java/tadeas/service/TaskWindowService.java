@@ -1,7 +1,7 @@
-package hello.bussiness.models;
+package tadeas.service;
 
-import hello.bussiness.endpoints.DeliveryEndpoint;
-import hello.bussiness.endpoints.DeliveryWindowEndpoint;
+import tadeas.dto.DeliveryDTO;
+import tadeas.dto.DeliveryWindowDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.RequestScope;
+import tadeas.data.Delivery;
+import tadeas.data.DeliveryI;
+import tadeas.data.TaskWindow;
+import tadeas.data.TaskWindowI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,9 +24,9 @@ import java.util.Map;
 @Service
 @Lazy
 @RequestScope
-public class TaskList  implements TaskListI {
+public class TaskWindowService implements TaskWindowServiceI {
 
-    private static final Logger log = LoggerFactory.getLogger(TaskList.class);
+    private static final Logger log = LoggerFactory.getLogger(TaskWindowService.class);
 
     private List<TaskWindowI> windows;
 
@@ -43,16 +47,16 @@ public class TaskList  implements TaskListI {
         return windows;
     }
 
-    public TaskList(){
+    public TaskWindowService(){
     }
 
 
     private List<TaskWindowI> scrapeWindows(){
         String windowsUrl = url + "windows";
-        ResponseEntity<DeliveryWindowEndpoint[]> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowEndpoint[].class);
-        DeliveryWindowEndpoint[] windows = responseEntity.getBody();
+        ResponseEntity<DeliveryWindowDTO[]> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowDTO[].class);
+        DeliveryWindowDTO[] windows = responseEntity.getBody();
         List<TaskWindowI> result = new ArrayList<>();
-        for (DeliveryWindowEndpoint win: windows){
+        for (DeliveryWindowDTO win: windows){
             log.info(win.toString());
             result.add(new TaskWindow(win));
         }
@@ -62,10 +66,10 @@ public class TaskList  implements TaskListI {
 
     private Map<Integer, List<DeliveryI>> scrapeDelivery(){
         String deliveryUrl = url + "delivery";
-        ResponseEntity<DeliveryEndpoint[]> responseDelivery = restTemplate.getForEntity(deliveryUrl, DeliveryEndpoint[].class);
-        DeliveryEndpoint[] delivery = responseDelivery.getBody();
+        ResponseEntity<DeliveryDTO[]> responseDelivery = restTemplate.getForEntity(deliveryUrl, DeliveryDTO[].class);
+        DeliveryDTO[] delivery = responseDelivery.getBody();
         Map<Integer, List<DeliveryI>> result = new HashMap<>();
-        for (DeliveryEndpoint deli: delivery){
+        for (DeliveryDTO deli: delivery){
             log.info(deli.toString());
             int windowsId = deli.getTaskDeliveryWindow().getId();
             if (result.containsKey(windowsId)){

@@ -1,8 +1,9 @@
-package hello;
+package tadeas;
 
-import hello.bussiness.endpoints.UserEndpoint;
-import hello.bussiness.models.SessionKey;
-import hello.bussiness.models.SessionKeyI;
+import tadeas.auth.AuthorizationHeaderInterceptor;
+import tadeas.dto.UserDTO;
+import tadeas.data.SessionKeyI;
+import tadeas.data.SessionKey;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -46,7 +47,7 @@ public class Application implements WebMvcConfigurer {
     @Bean
     @RequestScope
     public SessionKeyI token(){
-        UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new SessionKey(user.getSessionId());
     };
 

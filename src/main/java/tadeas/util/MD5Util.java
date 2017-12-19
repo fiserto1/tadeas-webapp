@@ -1,4 +1,4 @@
-package hello.util;
+package tadeas.util;
 
 
 import java.security.MessageDigest;

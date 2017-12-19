@@ -1,6 +1,6 @@
-package hello.bussiness.models;
+package tadeas.data;
 
-import hello.bussiness.endpoints.TaskEndpoint;
+import tadeas.dto.TaskDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +11,9 @@ public interface TaskWindowI {
 
     public void setId(int id);
 
-    public TaskEndpoint getTask();
+    public TaskDTO getTask();
 
-    public void setTask(TaskEndpoint task);
+    public void setTask(TaskDTO task);
 
     public int getIssuer();
 

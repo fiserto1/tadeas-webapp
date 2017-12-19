@@ -1,4 +1,4 @@
-package hello.bussiness.endpoints;
+package tadeas.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeliveryEndpoint {
+public class DeliveryDTO {
 
     private int id;
-    private DeliveryWindowEndpoint taskDeliveryWindow;
+    private DeliveryWindowDTO taskDeliveryWindow;
     private String solution;
     @JsonFormat(pattern = "yyyy-dd-MM")
     private Date deliveryDate;
@@ -31,11 +31,11 @@ public class DeliveryEndpoint {
         this.id = id;
     }
 
-    public DeliveryWindowEndpoint getTaskDeliveryWindow() {
+    public DeliveryWindowDTO getTaskDeliveryWindow() {
         return taskDeliveryWindow;
     }
 
-    public void setTaskDeliveryWindow(DeliveryWindowEndpoint taskDeliveryWindow) {
+    public void setTaskDeliveryWindow(DeliveryWindowDTO taskDeliveryWindow) {
         this.taskDeliveryWindow = taskDeliveryWindow;
     }
 
@@ -113,7 +113,7 @@ public class DeliveryEndpoint {
 
     @Override
     public String toString() {
-        return "DeliveryEndpoint{" +
+        return "DeliveryDTO{" +
                 "id=" + id +
                 ", taskDeliveryWindow=" + taskDeliveryWindow +
                 ", solution='" + solution + '\'' +

@@ -1,4 +1,4 @@
-package hello.bussiness.models;
+package tadeas.data;
 
 import java.util.Date;
 

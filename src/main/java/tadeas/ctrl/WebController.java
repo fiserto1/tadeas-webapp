@@ -1,9 +1,9 @@
-package hello;
+package tadeas.ctrl;
 
-import hello.bussiness.models.RoleType;
-import hello.bussiness.models.SessionKeyI;
-import hello.bussiness.models.TaskList;
-import hello.bussiness.models.TaskWindowI;
+import tadeas.data.SessionKeyI;
+import tadeas.service.TaskWindowService;
+import tadeas.data.TaskWindowI;
+import tadeas.data.RoleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -14,6 +14,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import tadeas.service.TaskWindowServiceI;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,13 +26,13 @@ public class WebController {
     private static final Logger log = LoggerFactory.getLogger(WebController.class);
 
     @Autowired
-    MessageSource messageSource;
+    private MessageSource messageSource;
 
     @Autowired
     private BeanFactory beanFactory;
 
     @Autowired
-    TaskList tasksList;
+    private TaskWindowServiceI tasksList;
 
 
     @Value("${backend.url}")
@@ -44,18 +45,18 @@ public class WebController {
     public String index(String name, Model model, HttpServletRequest request) {
         log.info(sesion.getToken());
         List<TaskWindowI> tasks = tasksList.getWindows();
-//        UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        RestTemplate restTemplate = beanFactory.getBean(RestTemplate.class, user.getSessionKey());
 //        String windowsUrl = url + "windows";
-//        ResponseEntity<DeliveryWindowEndpoint[]> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowEndpoint[].class);
-//        DeliveryWindowEndpoint[] windows = responseEntity.getBody();
+//        ResponseEntity<DeliveryWindowDTO[]> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowDTO[].class);
+//        DeliveryWindowDTO[] windows = responseEntity.getBody();
 //        String deliveryUrl = url + "delivery";
-//        ResponseEntity<DeliveryEndpoint[]> responseDelivery = restTemplate.getForEntity(deliveryUrl, DeliveryEndpoint[].class);
-//        DeliveryEndpoint[] delivery = responseDelivery.getBody();
-//        for(DeliveryWindowEndpoint win: windows){
+//        ResponseEntity<DeliveryDTO[]> responseDelivery = restTemplate.getForEntity(deliveryUrl, DeliveryDTO[].class);
+//        DeliveryDTO[] delivery = responseDelivery.getBody();
+//        for(DeliveryWindowDTO win: windows){
 //            log.info(win.toString());
 //        }
-//        for (DeliveryEndpoint deli: delivery){
+//        for (DeliveryDTO deli: delivery){
 //            log.info(deli.toString());
 //        }
 //        log.info(user.toString());
@@ -96,7 +97,7 @@ public class WebController {
 
 
 //    @PostMapping("/login")
-//    public String loginSend(@Valid @ModelAttribute("form") Login login, final BindingResult bindingResult, Model model) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+//    public String loginSend(@Valid @ModelAttribute("form") Login login, final BindingResult bindingResult, Model data) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 //        if (bindingResult.hasErrors()) {
 //            return "login";
 //        }
@@ -110,14 +111,14 @@ public class WebController {
 //            log.info(loginResponse.toString());
 //        } catch (HttpStatusCodeException e) {
 //            if (e.getStatusCode() == HttpStatus.FORBIDDEN) {
-//                model.addAttribute("badCredentials", true);
+//                data.addAttribute("badCredentials", true);
 //                return "login";
 //            }
-//            model.addAttribute("apiError", true);
+//            data.addAttribute("apiError", true);
 //            return "login";
 //        }
-//        model.addAttribute("login", login.getLogin());
-//        model.addAttribute("password", login.getPassword());
+//        data.addAttribute("login", login.getLogin());
+//        data.addAttribute("password", login.getPassword());
 //        return "loged";
 //    }
 }

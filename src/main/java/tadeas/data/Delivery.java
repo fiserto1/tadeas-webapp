@@ -1,6 +1,6 @@
-package hello.bussiness.models;
+package tadeas.data;
 
-import hello.bussiness.endpoints.DeliveryEndpoint;
+import tadeas.dto.DeliveryDTO;
 
 import java.util.Date;
 
@@ -17,7 +17,7 @@ public class Delivery implements DeliveryI {
     private String acceptanceBinary;
     private Boolean acceptation;
 
-    public Delivery(DeliveryEndpoint endpoint){
+    public Delivery(DeliveryDTO endpoint){
         this.id = endpoint.getId();
         this.solution = endpoint.getSolution();
         this.deliveryDate = endpoint.getDeliveryDate();

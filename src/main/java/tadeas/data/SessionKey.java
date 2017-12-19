@@ -1,6 +1,6 @@
-package hello.bussiness.models;
+package tadeas.data;
 
-public class SessionKey implements SessionKeyI{
+public class SessionKey implements SessionKeyI {
 
 
     private String token;

@@ -1,16 +1,23 @@
-package hello.bussiness.endpoints;
+package tadeas.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TaskEndpoint {
+public class DeliveryWindowDTO {
+
     private int id;
-    private String name;
+    private TaskDTO task;
     private int issuer;
     private boolean active;
+    @JsonFormat(pattern = "yyyy-dd-MM")
     private Date issueDate;
+    @JsonFormat(pattern = "yyyy-dd-MM")
+    private Date startDate;
+    @JsonFormat(pattern = "yyyy-dd-MM")
+    private Date deadlineDate;
     private String definition;
 
     public int getId() {
@@ -21,12 +28,12 @@ public class TaskEndpoint {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public TaskDTO getTask() {
+        return task;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTask(TaskDTO task) {
+        this.task = task;
     }
 
     public int getIssuer() {
@@ -53,6 +60,22 @@ public class TaskEndpoint {
         this.issueDate = issueDate;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getDeadlineDate() {
+        return deadlineDate;
+    }
+
+    public void setDeadlineDate(Date deadlineDate) {
+        this.deadlineDate = deadlineDate;
+    }
+
     public String getDefinition() {
         return definition;
     }
@@ -63,12 +86,14 @@ public class TaskEndpoint {
 
     @Override
     public String toString() {
-        return "TaskEndpoint{" +
+        return "DeliveryWindowDTO{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", task=" + task +
                 ", issuer=" + issuer +
                 ", active=" + active +
                 ", issueDate=" + issueDate +
+                ", startDate=" + startDate +
+                ", deadlineDate=" + deadlineDate +
                 ", definition='" + definition + '\'' +
                 '}';
     }

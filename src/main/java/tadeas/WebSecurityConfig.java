@@ -1,4 +1,4 @@
-package hello;
+package tadeas;
 
 
 import org.springframework.context.annotation.Configuration;
