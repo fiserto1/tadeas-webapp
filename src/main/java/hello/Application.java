@@ -1,15 +1,23 @@
 package hello;
 
+import hello.bussiness.endpoints.UserEndpoint;
+import hello.bussiness.models.SessionKey;
+import hello.bussiness.models.SessionKeyI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.Collections;
 import java.util.Locale;
 
 @EnableAutoConfiguration
@@ -33,6 +41,23 @@ public class Application implements WebMvcConfigurer {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
+    }
+
+    @Bean
+    @RequestScope
+    public SessionKeyI token(){
+        UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new SessionKey(user.getSessionKey());
+    };
+
+
+    @Bean
+    @RequestScope
+    @Lazy()
+    public RestTemplate restTemplate(SessionKeyI token) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setInterceptors(Collections.singletonList(new AuthorizationHeaderInterceptor(token.getToken())));
+        return restTemplate;
     }
 
     @Override

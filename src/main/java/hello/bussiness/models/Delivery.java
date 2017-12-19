@@ -1,27 +1,35 @@
-package hello.bussiness.endpoints;
+package hello.bussiness.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import hello.bussiness.endpoints.DeliveryEndpoint;
 
 import java.util.Date;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class DeliveryEndpoint {
+public class Delivery implements DeliveryI {
 
     private int id;
-    private DeliveryWindowEndpoint taskDeliveryWindow;
     private String solution;
-    @JsonFormat(pattern = "yyyy-dd-MM")
     private Date deliveryDate;
     private Boolean valid;
     private Integer deliveryUser;
-    @JsonFormat(pattern = "yyyy-dd-MM")
     private Date acceptanceDate;
     private Integer acceptanceUser;
     private String acceptanceMessage;
     private String acceptanceBinary;
     private Boolean acceptation;
 
+    public Delivery(DeliveryEndpoint endpoint){
+        this.id = endpoint.getId();
+        this.solution = endpoint.getSolution();
+        this.deliveryDate = endpoint.getDeliveryDate();
+        this.valid = endpoint.isValid();
+        this.deliveryUser = endpoint.getDeliveryUser();
+        this.acceptanceDate = endpoint.getAcceptanceDate();
+        this.deliveryUser = endpoint.getDeliveryUser();
+        this.acceptanceMessage = endpoint.getAcceptanceMessage();
+        this.acceptanceBinary = endpoint.getAcceptanceBinary();
+        this.acceptation = endpoint.isAcceptation();
+
+    }
 
     public int getId() {
         return id;
@@ -29,14 +37,6 @@ public class DeliveryEndpoint {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public DeliveryWindowEndpoint getTaskDeliveryWindow() {
-        return taskDeliveryWindow;
-    }
-
-    public void setTaskDeliveryWindow(DeliveryWindowEndpoint taskDeliveryWindow) {
-        this.taskDeliveryWindow = taskDeliveryWindow;
     }
 
     public String getSolution() {
@@ -103,28 +103,12 @@ public class DeliveryEndpoint {
         this.acceptanceBinary = acceptanceBinary;
     }
 
-    public boolean isAcceptation() {
+    public boolean isAccepted() {
         return acceptation;
     }
 
-    public void setAcceptation(boolean acceptation) {
-        this.acceptation = acceptation;
-    }
-
     @Override
-    public String toString() {
-        return "DeliveryEndpoint{" +
-                "id=" + id +
-                ", taskDeliveryWindow=" + taskDeliveryWindow +
-                ", solution='" + solution + '\'' +
-                ", deliveryDate=" + deliveryDate +
-                ", valid=" + valid +
-                ", deliveryUser=" + deliveryUser +
-                ", acceptanceDate=" + acceptanceDate +
-                ", acceptanceUser=" + acceptanceUser +
-                ", acceptanceMessage='" + acceptanceMessage + '\'' +
-                ", acceptanceBinary='" + acceptanceBinary + '\'' +
-                ", acceptation=" + acceptation +
-                '}';
+    public boolean isEvaluated() {
+        return acceptation != null;
     }
 }
