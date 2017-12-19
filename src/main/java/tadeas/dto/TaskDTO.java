@@ -13,6 +13,9 @@ public class TaskDTO {
     private Date issueDate;
     private String definition;
 
+    public TaskDTO() {
+    }
+
     public int getId() {
         return id;
     }

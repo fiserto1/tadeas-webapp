@@ -111,4 +111,18 @@ public class TaskWindow implements TaskWindowI{
         return getLastDelivery().isAccepted();
     }
 
+    @Override
+    public String toString() {
+        return "TaskWindow{" +
+                "id=" + id +
+                ", task=" + task +
+                ", issuer=" + issuer +
+                ", active=" + active +
+                ", issueDate=" + issueDate +
+                ", startDate=" + startDate +
+                ", deadlineDate=" + deadlineDate +
+                ", definition='" + definition + '\'' +
+                ", deliveries=" + deliveries +
+                '}';
+    }
 }

@@ -1,5 +1,7 @@
 package tadeas.auth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tadeas.dto.UserDTO;
 import tadeas.data.RoleType;
 import tadeas.util.MD5Util;
@@ -29,6 +31,8 @@ import java.util.List;
 @Service
 @Configurable
 public class ApiAuthenticationManager implements AuthenticationProvider {
+
+    private static final Logger log = LoggerFactory.getLogger(ApiAuthenticationManager.class);
 
     @Value("${backend.url}")
     private String url;
@@ -63,7 +67,8 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
             }
 
             String role = loginResponse.getRole();
-            RoleType acceptedRole = RoleType.valueOf(role.toUpperCase());
+            RoleType acceptedRole = RoleType.valueOf("ROLE_" + role.toUpperCase());
+            log.info("Setting role: {}", acceptedRole.name());
             grantedAuths.add(new SimpleGrantedAuthority(acceptedRole.name()));
 
         } catch (HttpStatusCodeException e) {

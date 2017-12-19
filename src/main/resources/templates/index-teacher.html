@@ -29,7 +29,7 @@
         <th th:text="#{task.acceptance}"</th>
         </thead>
         <tbody>
-        <tr th:each="task: ${tasks}">
+        <tr th:each="task: ${taskWindows}">
             <td th:text="${task.task.name}"></td>
             <td th:text="${#dates.format(task.deadlineDate, #messages.msg('dateformat'))}"></td>
             <td th:with="delivery=${task.lastDelivery}">
@@ -37,7 +37,7 @@
                     <span class="glyphicon glyphicon-download" aria-hidden="true" th:title="#{task.delivered} + ${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}" data-placement="bottom" data-toggle="tooltip"></span>
                 </a>
                 <!--TODO set valid url to accept solution maybe use modal-->
-                <a th:unless="${delivery.isValid()}" th:href="@{/}" class="btn btn-primary btn-xs" th:title="#{task.setValid}" data-placement="bottom" data-toggle="tooltip">
+                <a th:unless="${delivery.isValid()}" th:href="@{/confirmTask?id=}+${task.task.id}" class="btn btn-primary btn-xs" th:title="#{task.setValid}" data-placement="bottom" data-toggle="tooltip">
                     <span class="glyphicon glyphicon-envelope"></span>
                 </a>
             </td>

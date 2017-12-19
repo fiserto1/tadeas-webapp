@@ -1,7 +1,6 @@
 package tadeas.ctrl;
 
 import tadeas.data.SessionKeyI;
-import tadeas.service.TaskWindowService;
 import tadeas.data.TaskWindowI;
 import tadeas.data.RoleType;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class WebController {
     private BeanFactory beanFactory;
 
     @Autowired
-    private TaskWindowServiceI tasksList;
+    private TaskWindowServiceI taskWindowService;
 
 
     @Value("${backend.url}")
@@ -44,7 +43,7 @@ public class WebController {
     @RequestMapping(value = {"", "/", "index"})
     public String index(String name, Model model, HttpServletRequest request) {
         log.info(sesion.getToken());
-        List<TaskWindowI> tasks = tasksList.getWindows();
+        List<TaskWindowI> taskWindows = taskWindowService.getWindows();
 //        UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        RestTemplate restTemplate = beanFactory.getBean(RestTemplate.class, user.getSessionKey());
 //        String windowsUrl = url + "windows";
@@ -60,18 +59,35 @@ public class WebController {
 //            log.info(deli.toString());
 //        }
 //        log.info(user.toString());
-        for (TaskWindowI task: tasks){
+        for (TaskWindowI task: taskWindows){
             log.info(task.getLastDelivery().isValid().toString());
         }
-        model.addAttribute("tasks", tasks);
-        if (request.isUserInRole(RoleType.STUDENT.name())) {
+        model.addAttribute("taskWindows", taskWindows);
+
+        if (request.isUserInRole(RoleType.ROLE_STUDENT.name())) {
+            log.info("Showing task list for role: {}", RoleType.ROLE_STUDENT);
             return "index-student";
-        }
-        else {
+        } else {
+            log.info("Showing task list for role: {}", RoleType.ROLE_TEACHER);
             return "index-teacher";
         }
 //        auth.getAuthorities().contains("ROLE")
 
+    }
+
+    @RequestMapping(value = {"/confirmTask"}, params = {"id"})
+    public String confirmTask(String name, Model model, HttpServletRequest request) {
+        if (!request.isUserInRole(RoleType.ROLE_STUDENT.name())) {
+            //not authorized
+            log.error("User does not have role: {}.", RoleType.ROLE_STUDENT);
+            return index(name, model, request);
+        }
+
+
+        int taskId = Integer.parseInt(request.getParameter("id"));
+        log.info("Task confirmed: TaskId: {}.", taskId);
+
+        return index(name, model, request);
     }
 
     @RequestMapping("/greeting")

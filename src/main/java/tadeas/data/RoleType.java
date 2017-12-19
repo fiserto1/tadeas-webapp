@@ -1,5 +1,5 @@
 package tadeas.data;
 
 public enum RoleType {
-    STUDENT, TEACHER
+    ROLE_STUDENT, ROLE_TEACHER
 }
