@@ -1,5 +1,6 @@
 package tadeas.service;
 
+import org.springframework.http.HttpStatus;
 import tadeas.dto.DeliveryDTO;
 import tadeas.dto.DeliveryWindowDTO;
 import org.slf4j.Logger;
@@ -45,6 +46,22 @@ public class TaskWindowService implements TaskWindowServiceI {
             }
         }
         return windows;
+    }
+
+    @Override
+    public boolean confirmDelivery(int deliveryId) {
+        String deliveryUrl = url + "delivery/" + deliveryId;
+        Map<String, Boolean> body = new HashMap<>();
+        body.put("valid", true);
+        ResponseEntity<Object> noContent = restTemplate.postForEntity(deliveryUrl, body, Object.class);
+
+        if (HttpStatus.NO_CONTENT.equals(noContent.getStatusCode())) {
+            log.info("Delivery confirmed successfully.");
+            return true;
+        } else {
+            log.info("Failed to confirm delivery.");
+            return false;
+        }
     }
 
     public TaskWindowService(){

@@ -76,7 +76,7 @@ public class WebController {
     }
 
     @RequestMapping(value = {"/confirmTask"}, params = {"id"})
-    public String confirmTask(String name, Model model, HttpServletRequest request) {
+    public String confirmDelivery(String name, Model model, HttpServletRequest request) {
         if (!request.isUserInRole(RoleType.ROLE_STUDENT.name())) {
             //not authorized
             log.error("User does not have role: {}.", RoleType.ROLE_STUDENT);
@@ -84,9 +84,15 @@ public class WebController {
         }
 
 
-        int taskId = Integer.parseInt(request.getParameter("id"));
-        log.info("Task confirmed: TaskId: {}.", taskId);
+        int deliveryId = Integer.parseInt(request.getParameter("id"));
 
+        boolean result = taskWindowService.confirmDelivery(deliveryId);
+
+        if (!result) {
+            throw new IllegalArgumentException("Failed to confirm delivery.");
+        }
+
+        log.info("Task confirmed: TaskId: {}.", deliveryId);
         return index(name, model, request);
     }
 

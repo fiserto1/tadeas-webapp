@@ -12,4 +12,5 @@ public interface TaskWindowServiceI {
 
     public List<TaskWindowI> getWindows();
 
+    boolean confirmDelivery(int taskId);
 }

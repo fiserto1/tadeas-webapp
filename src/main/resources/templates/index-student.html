@@ -36,7 +36,7 @@
                     <span class="glyphicon glyphicon-download" aria-hidden="true" th:title="#{task.delivered} + ${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}" data-placement="bottom" data-toggle="tooltip"></span>
                 </a>
                 <!--TODO set valid url to accept solution maybe use modal-->
-                <a th:unless="${delivery.isValid()}" class="btn btn-primary btn-xs" th:href="@{/confirmTask?id=}+${task.task.id}" th:title="#{task.setValid}" data-placement="bottom" data-toggle="tooltip">
+                <a th:unless="${delivery.isValid()}" class="btn btn-primary btn-xs" th:href="@{/confirmTask(id=${delivery.id})}" th:title="#{task.setValid}" data-placement="bottom" data-toggle="tooltip">
                     <span class="glyphicon glyphicon-envelope"></span>
                 </a>
             </td>
