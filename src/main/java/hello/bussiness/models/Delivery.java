@@ -27,6 +27,7 @@ public class Delivery implements DeliveryI {
         this.deliveryUser = endpoint.getDeliveryUser();
         this.acceptanceMessage = endpoint.getAcceptanceMessage();
         this.acceptanceBinary = endpoint.getAcceptanceBinary();
+        this.acceptanceUser = endpoint.getAcceptanceUser();
         this.acceptation = endpoint.isAcceptation();
 
     }
