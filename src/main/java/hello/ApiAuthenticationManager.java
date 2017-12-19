@@ -1,6 +1,7 @@
 package hello;
 
 import hello.bussiness.endpoints.UserEndpoint;
+import hello.bussiness.models.RoleType;
 import hello.utills.Md5;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,11 +14,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.management.relation.Role;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -56,11 +59,15 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
         UserEndpoint loginResponse = null;
         try {
             loginResponse = restTemplate.getForObject(loginUrl, UserEndpoint.class);
-            if (loginResponse.getRole().equals("Teacher")) {
-                grantedAuths.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
-            } else {
-                grantedAuths.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+
+            if (loginResponse == null) {
+                throw new AuthenticationServiceException("Response from Backend API is null.");
             }
+
+            String role = loginResponse.getRole();
+            RoleType acceptedRole = RoleType.valueOf(role.toUpperCase());
+            grantedAuths.add(new SimpleGrantedAuthority(acceptedRole.name()));
+
         } catch (HttpStatusCodeException e) {
             if (e.getStatusCode() == HttpStatus.FORBIDDEN) {
                 throw new BadCredentialsException("1000");

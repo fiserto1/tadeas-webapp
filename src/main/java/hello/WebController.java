@@ -1,5 +1,6 @@
 package hello;
 
+import hello.bussiness.models.RoleType;
 import hello.bussiness.models.SessionKeyI;
 import hello.bussiness.models.TaskList;
 import hello.bussiness.models.TaskWindowI;
@@ -62,7 +63,7 @@ public class WebController {
             log.info(task.getLastDelivery().isValid().toString());
         }
         model.addAttribute("tasks", tasks);
-        if (request.isUserInRole("ROLE_STUDENT")) {
+        if (request.isUserInRole(RoleType.STUDENT.name())) {
             return "index-student";
         }
         else {
