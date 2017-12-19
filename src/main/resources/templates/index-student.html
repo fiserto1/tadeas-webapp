@@ -28,6 +28,9 @@
         <th th:text="#{task.acceptance}"</th>
         </thead>
         <tbody>
+        <div class="alert alert-danger" role="alert" th:if="${alertError}" th:text="#{delivery.confirm.error}"></div>
+        <div class="alert alert-info" role="alert" th:if="${alertOk}" th:text="#{delivery.confirm.ok}"></div>
+
         <tr th:each="task: ${taskWindows}">
             <td th:text="${task.task.name}"></td>
             <td th:text="${#dates.format(task.deadlineDate, #messages.msg('dateformat'))}"></td>

@@ -89,13 +89,15 @@ public class WebController {
             return index(name, model, request);
         }
 
-
         int deliveryId = Integer.parseInt(request.getParameter("id"));
 
         boolean result = taskWindowService.confirmDelivery(deliveryId);
 
-        if (!result) {
-            throw new IllegalArgumentException("Failed to confirm delivery.");
+        if (result) {
+            model.addAttribute("alertOk", true);
+        } else {
+            model.addAttribute("alertError", true);
+            log.warn("Failed to confirm delivery.");
         }
 
         log.info("Task confirmed: TaskId: {}.", deliveryId);
