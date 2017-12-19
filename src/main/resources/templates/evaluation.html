@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload System Tadeas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css"/>
+
+    <script type="text/javascript" src="webjars/jquery/3.2.1/jquery.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="alert alert-danger" role="alert" th:if="${badCredentials}" th:text="#{login.badPassword}"></div>
+<h2 th:text="#{greeting}"></h2>
+<div class="col-md-6">
+    <form th:action="'#'" th:object="${form}" method="post">
+        <div class="checkbox" th:classappend="${#fields.hasErrors('acceptance')} ? 'has-error'">
+            <label th:inline="text">
+                <input type="checkbox" th:field="*{acceptance}">[[#{evaluation.acceptance}]]
+            </label>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('acceptanceMessage')} ? 'has-error'">
+            <label for="acceptanceMessage" th:text="#{evaluation.acceptanceMessage}">:</label>
+            <input type="password" class="form-control" th:field="*{acceptanceMessage}">
+            <span id="password-help" class="help-block" th:if="${#fields.hasErrors('acceptanceMessage')}" th:errors="*{acceptanceMessage}">AcceptanceMessage error message.</span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" th:text="#{login.button}"></button>
+        </div>
+        </table>
+    </form>
+    <form method="get">
+
+    </form>
+</div>
+</div>
+</div>
+
+
+</body>
+</html>
