@@ -56,8 +56,8 @@ public class ApiAuthenticationManager implements AuthenticationProvider {
         UserEndpoint loginResponse = null;
         try {
             loginResponse = restTemplate.getForObject(loginUrl, UserEndpoint.class);
-            if (loginResponse.getRole().equals("TeacherTeacher")) {
-                grantedAuths.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+            if (loginResponse.getRole().equals("Teacher")) {
+                grantedAuths.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
             } else {
                 grantedAuths.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
             }
