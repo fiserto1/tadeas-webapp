@@ -1,6 +1,6 @@
 package hello;
 
-import hello.bussiness.endpoints.UserEndopoint;
+import hello.bussiness.endpoints.UserEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class WebController {
 
     @RequestMapping(value = {"", "/", "index"})
     public String index(String name, Model model) {
-        UserEndopoint user = (UserEndopoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEndpoint user = (UserEndpoint) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         log.info(user.toString());
         return "index";
     }

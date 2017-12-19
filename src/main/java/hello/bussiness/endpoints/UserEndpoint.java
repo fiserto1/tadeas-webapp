@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserEndopoint {
+public class UserEndpoint {
 
 
         private Integer id;
@@ -17,7 +17,7 @@ public class UserEndopoint {
         private List<GroupEndpoint> groups;
         protected String sessionKey;
 
-        public UserEndopoint() {
+        public UserEndpoint() {
         }
 
         public Integer getId() {
