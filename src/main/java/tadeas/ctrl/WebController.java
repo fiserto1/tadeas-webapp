@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,12 +16,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import tadeas.data.RoleType;
 import tadeas.data.SessionKeyI;
 import tadeas.data.TaskWindowI;
+import tadeas.dto.TaskDTO;
 import tadeas.form.EvaluationForm;
-import tadeas.service.TaskWindowServiceI;
+import tadeas.service.DeliveryService;
+import tadeas.service.TaskService;
+import tadeas.service.TaskWindowService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -37,7 +44,13 @@ public class WebController {
     private MessageSource messageSource;
 
     @Autowired
-    private TaskWindowServiceI taskWindowService;
+    private TaskWindowService taskWindowService;
+
+    @Autowired
+    private DeliveryService deliveryService;
+
+    @Autowired
+    private TaskService taskService;
 
     @Autowired
     private SessionKeyI sessionKey;
@@ -45,7 +58,7 @@ public class WebController {
     @RequestMapping(value = {"", "/", "index"})
     public String index(String name, Model model, HttpServletRequest request) {
         log.info(sessionKey.getToken());
-        List<TaskWindowI> taskWindows = taskWindowService.getWindows();
+        List<TaskWindowI> taskWindows = taskWindowService.getTaskWindows();
 //        UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         for (TaskWindowI task : taskWindows) {
             log.info(task.getLastDelivery().isValid().toString());
@@ -71,7 +84,7 @@ public class WebController {
 
         int deliveryId = Integer.parseInt(request.getParameter("id"));
 
-        boolean result = taskWindowService.confirmDelivery(deliveryId);
+        boolean result = deliveryService.confirmDelivery(deliveryId);
 
         if (result) {
             model.addAttribute("alertOk", true);
@@ -85,28 +98,45 @@ public class WebController {
     }
 
     @GetMapping(value = {"/evaluateDelivery"}, params = {"id"})
-    public String evaluateTask(EvaluationForm evaluation, Model model, HttpServletRequest request) {
+    public String evaluateTaskScreen(EvaluationForm evaluation, Model model, HttpServletRequest request) {
         if (!request.isUserInRole(RoleType.ROLE_TEACHER.name())) {
             //not authorized
             log.error("User does not have role: {}.", RoleType.ROLE_TEACHER);
             return "redirect:/index";
         }
 
-        int deliveryId = Integer.parseInt(request.getParameter("id"));
-        log.info("Delivery confirmed: DeliveryId: {}.", deliveryId);
+        int taskId = Integer.parseInt(request.getParameter("id"));
 
+        model.addAttribute("taskId", taskId);
         model.addAttribute("form", new EvaluationForm());
 
         return "evaluation";
     }
 
     @PostMapping(value = {"/evaluateDelivery"}, params = {"id"})
-    public String evaluateTaskResult(@Valid @ModelAttribute("form") EvaluationForm evaluation, final BindingResult bindingResult, Model data) {
+    public String evaluateTaskResult(@Valid @ModelAttribute("form") EvaluationForm evaluation,
+                                     final BindingResult bindingResult, Model model,  HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "evaluation";
         }
+        if (!request.isUserInRole(RoleType.ROLE_TEACHER.name())) {
+//            Not authorized
+            log.error("User does not have role: {}.", RoleType.ROLE_TEACHER);
+            return "redirect:/index";
+        }
 
-        return "redirect:index";
+        int deliveryId = Integer.parseInt(request.getParameter("id"));
+
+        boolean result = deliveryService.evaluateDelivery(deliveryId, evaluation);
+
+        if (result) {
+            model.addAttribute("alertOk", true);
+        } else {
+            model.addAttribute("alertError", true);
+            log.warn("Failed to evaluate delivery.");
+        }
+
+        return index(null, model, request);
     }
 
     @RequestMapping(value = "/uploadFile", params = "id")
@@ -118,8 +148,9 @@ public class WebController {
         }
 
         int taskId = Integer.parseInt(request.getParameter("id"));
+        TaskDTO task = taskService.getTask(taskId);
 
-        model.addAttribute("taskId", taskId);
+        model.addAttribute("task", task);
 
         return "upload";
     }
@@ -138,7 +169,18 @@ public class WebController {
 
         model.addAttribute("alertOk", true);
 
-        return "upload";
+        return uploadScreen(model, request);
+    }
+
+    @RequestMapping(value = "/downloadDelivery", params = "id")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadFile(Model model, HttpServletRequest request) {
+
+        int deliveryId = Integer.parseInt(request.getParameter("id"));
+
+        Resource file = deliveryService.getDeliveryResource(deliveryId);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
     @RequestMapping("/login")

@@ -1,5 +1,6 @@
 package tadeas;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import tadeas.auth.AuthorizationHeaderInterceptor;
 import tadeas.dto.UserDTO;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import tadeas.storage.StorageService;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -70,5 +72,13 @@ public class Application implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+    }
+
+    @Bean
+    CommandLineRunner init(StorageService storageService) {
+        return (args) -> {
+            storageService.deleteAll();
+            storageService.init();
+        };
     }
 }

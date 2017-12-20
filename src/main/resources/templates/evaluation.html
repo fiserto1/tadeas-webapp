@@ -11,7 +11,10 @@
     <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div class="container">
+
+    <!--MENU-->
     <div class="row menu">
         <div class="col-md-10 col-xs-12">
             <h2 th:text="#{evaluation.title}"></h2>
@@ -23,7 +26,10 @@
         </div>
     </div>
 
+    <!--ALERT-->
     <div class="alert alert-danger" role="alert" th:if="${badCredentials}" th:text="#{login.badPassword}"></div>
+
+    <!--CONTENT-->
     <div class="col-md-6">
         <form th:action="'#'" th:object="${form}" method="post">
             <div class="checkbox" th:classappend="${#fields.hasErrors('acceptance')} ? 'has-error'">

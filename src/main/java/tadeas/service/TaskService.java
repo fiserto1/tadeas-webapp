@@ -2,13 +2,10 @@ package tadeas.service;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import tadeas.data.TaskWindowI;
-
-import java.util.List;
+import tadeas.dto.TaskDTO;
 
 @Lazy
 @Service
-public interface TaskWindowService {
-
-    List<TaskWindowI> getTaskWindows();
+public interface TaskService {
+    TaskDTO getTask(int taskId);
 }

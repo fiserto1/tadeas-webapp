@@ -13,6 +13,8 @@
 <body>
 
 <div class="container">
+
+    <!--MENU-->
     <div class="row menu">
         <div class="col-md-10 col-xs-12">
             <h2 th:text="#{upload.title}"></h2>
@@ -24,11 +26,42 @@
         </div>
     </div>
 
-
+    <!--ALERT-->
     <div class="alert alert-danger" role="alert" th:if="${badCredentials}" th:text="#{login.badPassword}"></div>
     <div class="alert alert-info" role="alert" th:if="${alertOk}" th:text="#{upload.file.ok}"></div>
+
+    <!--CONTENT-->
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="task-detail" class="table table-striped table-responsive">
+                <tbody>
+                <tr>
+                    <th th:text="#{task.name}"></th>
+                    <td th:text="${task.name}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{task.issuer}"></th>
+                    <td th:text="${task.issuer}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{task.active}"></th>
+                    <td th:text="${task.active}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{task.issueDate}"></th>
+                    <td th:text="${task.issueDate}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{task.definition}"></th>
+                    <td th:text="${task.definition}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="col-md-6">
-        <form action="upload.html" th:action="@{/uploadFile(id=${taskId})}" method="POST" enctype="multipart/form-data">
+        <form action="upload.html" th:action="@{/uploadFile(id=${task.id})}" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label th:text="#{upload.input.label}">:</label>
                 <input type="file" class="form-control" name="file">
