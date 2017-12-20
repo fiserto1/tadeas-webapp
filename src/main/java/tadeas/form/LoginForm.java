@@ -5,7 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 
-public class Login {
+public class LoginForm {
         @Email
         private String login;
         @NotEmpty

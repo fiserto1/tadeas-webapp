@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import tadeas.data.RoleType;
 import tadeas.data.SessionKeyI;
 import tadeas.data.TaskWindowI;
-import tadeas.form.Evaluation;
+import tadeas.form.EvaluationForm;
 import tadeas.service.TaskWindowServiceI;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +85,7 @@ public class WebController {
     }
 
     @GetMapping(value = {"/evaluateDelivery"}, params = {"id"})
-    public String evaluateTask(Evaluation evaluation, Model model, HttpServletRequest request) {
+    public String evaluateTask(EvaluationForm evaluation, Model model, HttpServletRequest request) {
         if (!request.isUserInRole(RoleType.ROLE_TEACHER.name())) {
             //not authorized
             log.error("User does not have role: {}.", RoleType.ROLE_TEACHER);
@@ -93,18 +95,50 @@ public class WebController {
         int deliveryId = Integer.parseInt(request.getParameter("id"));
         log.info("Delivery confirmed: DeliveryId: {}.", deliveryId);
 
-        model.addAttribute("form", new Evaluation());
+        model.addAttribute("form", new EvaluationForm());
 
         return "evaluation";
     }
 
     @PostMapping(value = {"/evaluateDelivery"}, params = {"id"})
-    public String evaluateTaskResult(@Valid @ModelAttribute("form") Evaluation evaluation, final BindingResult bindingResult, Model data) {
+    public String evaluateTaskResult(@Valid @ModelAttribute("form") EvaluationForm evaluation, final BindingResult bindingResult, Model data) {
         if (bindingResult.hasErrors()) {
             return "evaluation";
         }
 
         return "redirect:index";
+    }
+
+    @RequestMapping(value = "/uploadFile", params = "id")
+    public String uploadScreen(Model model, HttpServletRequest request) {
+        if (!request.isUserInRole(RoleType.ROLE_STUDENT.name())) {
+            //not authorized
+            log.error("User does not have role: {}.", RoleType.ROLE_STUDENT);
+            return "redirect:/index";
+        }
+
+        int taskId = Integer.parseInt(request.getParameter("id"));
+
+        model.addAttribute("taskId", taskId);
+
+        return "upload";
+    }
+
+    @PostMapping(value = "/uploadFile", params = "id")
+    public String uploadFile(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request) {
+        if (!request.isUserInRole(RoleType.ROLE_STUDENT.name())) {
+//            Not authorized
+            log.error("User does not have role: {}.", RoleType.ROLE_STUDENT);
+            return "redirect:/index";
+        }
+
+        int taskId = Integer.parseInt(request.getParameter("id"));
+
+        log.info("File uploaded: {}. Assigned to task: {}", file.getOriginalFilename(), taskId);
+
+        model.addAttribute("alertOk", true);
+
+        return "upload";
     }
 
     @RequestMapping("/login")

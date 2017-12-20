@@ -3,10 +3,13 @@ package tadeas.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeliveryWindowDTO {
+public class DeliveryWindowDTO implements Serializable {
+
+    private static final long serialVersionUID = -8393921304784590261L;
 
     private int id;
     private TaskDTO task;

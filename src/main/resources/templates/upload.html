@@ -11,6 +11,7 @@
     <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div class="container">
     <div class="row">
         <div class="col-md-1 col-md-offset-10 col-xs-12 text-center">
@@ -22,26 +23,16 @@
 
     <h2 th:text="#{greeting}"></h2>
     <div class="alert alert-danger" role="alert" th:if="${badCredentials}" th:text="#{login.badPassword}"></div>
+    <div class="alert alert-info" role="alert" th:if="${alertOk}" th:text="#{upload.file.ok}"></div>
     <div class="col-md-6">
-        <form th:action="'#'" th:object="${form}" method="post">
-            <div class="checkbox" th:classappend="${#fields.hasErrors('acceptance')} ? 'has-error'">
-                <label th:inline="text">
-                    <input type="checkbox" th:field="*{acceptance}">[[#{evaluation.acceptance}]]
-                </label>
-            </div>
-            <div class="form-group" th:classappend="${#fields.hasErrors('acceptanceMessage')} ? 'has-error'">
-                <label for="acceptanceMessage" th:text="#{evaluation.acceptanceMessage}">:</label>
-                <input type="text" class="form-control" th:field="*{acceptanceMessage}">
-                <span id="acceptance-help" class="help-block" th:if="${#fields.hasErrors('acceptanceMessage')}"
-                      th:errors="*{acceptanceMessage}">AcceptanceMessage error message.</span>
+        <form action="upload.html" th:action="@{/uploadFile(id=${taskId})}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label th:text="#{upload.input.label}">:</label>
+                <input type="file" class="form-control" name="file">
             </div>
             <div>
-                <button type="submit" class="btn btn-primary" th:text="#{login.button}"></button>
+                <button type="submit" class="btn btn-primary" th:text="#{upload.button}"></button>
             </div>
-            </table>
-        </form>
-        <form method="get">
-
         </form>
     </div>
 </div>

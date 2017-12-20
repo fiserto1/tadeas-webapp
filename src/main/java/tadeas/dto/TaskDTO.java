@@ -2,10 +2,13 @@ package tadeas.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TaskDTO {
+public class TaskDTO implements Serializable {
+    private static final long serialVersionUID = -8678998943209189180L;
+
     private int id;
     private String name;
     private int issuer;

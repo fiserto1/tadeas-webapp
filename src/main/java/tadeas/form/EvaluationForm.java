@@ -1,7 +1,7 @@
 package tadeas.form;
 
 
-public class Evaluation {
+public class EvaluationForm {
 
     private String acceptanceMessage;
     private Boolean acceptance;
@@ -24,7 +24,7 @@ public class Evaluation {
 
     @Override
     public String toString() {
-        return "Evaluation{" +
+        return "EvaluationForm{" +
                 "acceptanceMessage='" + acceptanceMessage + '\'' +
                 ", acceptance=" + acceptance +
                 '}';

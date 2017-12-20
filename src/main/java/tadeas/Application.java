@@ -1,5 +1,6 @@
 package tadeas;
 
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import tadeas.auth.AuthorizationHeaderInterceptor;
 import tadeas.dto.UserDTO;
 import tadeas.data.SessionKeyI;
@@ -59,6 +60,11 @@ public class Application implements WebMvcConfigurer {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setInterceptors(Collections.singletonList(new AuthorizationHeaderInterceptor(token.getToken())));
         return restTemplate;
+    }
+
+    @Bean
+    public StandardServletMultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
     }
 
     @Override

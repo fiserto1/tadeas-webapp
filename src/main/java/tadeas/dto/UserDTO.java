@@ -2,10 +2,13 @@ package tadeas.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDTO {
+public class UserDTO implements Serializable {
+
+    private static final long serialVersionUID = -8194355707379673226L;
 
     private Integer id;
     private String userName;
