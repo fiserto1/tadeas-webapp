@@ -16,8 +16,12 @@
 <div class="container">
     <div class="alert alert-danger" role="alert" th:if="${param.error}" th:text="#{login.badCredentials}"></div>
     <div class="alert alert-danger" role="alert" th:if="${param.logout}" th:text="#{login.logout}"></div>
-    <h2 th:text="#{greeting}"></h2>
-    <div th:text="#{login.label}"></div>
+    <div class="row menu">
+        <div class="col-md-11 col-xs-12">
+            <h2 th:text="#{login.title}"></h2>
+        </div>
+    </div>
+    <!--<div th:text="#{login.label}"></div>-->
     <div class="col-md-6">
         <form th:action="@{/login}" method="post">
             <div class="form-group">
