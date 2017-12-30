@@ -16,30 +16,62 @@
 
 package tadeas;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
+import tadeas.ctrl.WebController;
+import tadeas.data.SessionKeyI;
+import tadeas.service.DeliveryService;
+import tadeas.service.TaskService;
+import tadeas.service.TaskWindowService;
+import tadeas.storage.StorageService;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = WebController.class)
+@AutoConfigureMockMvc(secure=false)
 public class ApplicationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @MockBean
+    private SessionKeyI token;
+
+    @MockBean
+    private TaskWindowService taskWindowService;
+
+    @MockBean
+    private DeliveryService deliveryService;
+
+    @MockBean
+    private TaskService taskService;
+
+    @MockBean
+    private StorageService storageService;
+
+
     @Test
     public void homePage() throws Exception {
         // N.B. jsoup can be useful for asserting HTML content
-        mockMvc.perform(get("/api/login"))
-                .andExpect(content().string(containsString("")));
+        mockMvc.perform(get("/index")).andExpect(content().string(containsString("Tadeas")));
+    }
+
+    @Test
+    public void login() throws Exception {
+        // N.B. jsoup can be useful for asserting HTML content
+        mockMvc.perform(get("/login")).andExpect(content().string(containsString("Potvrdit")));
     }
 }

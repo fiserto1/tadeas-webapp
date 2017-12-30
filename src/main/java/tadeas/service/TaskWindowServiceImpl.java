@@ -1,5 +1,6 @@
 package tadeas.service;
 
+import org.springframework.context.annotation.Primary;
 import tadeas.dto.DeliveryWindowDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.util.Map;
 @Service
 @Lazy
 @RequestScope
+@Primary
 public class TaskWindowServiceImpl implements TaskWindowService {
 
     private static final Logger log = LoggerFactory.getLogger(TaskWindowServiceImpl.class);
