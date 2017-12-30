@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,6 @@ import tadeas.dto.DeliveryDTO;
 import tadeas.form.EvaluationForm;
 import tadeas.storage.StorageService;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +25,7 @@ import java.util.Map;
 
 @Lazy
 @Service
+@Primary
 public class DeliveryServiceImpl implements DeliveryService {
 
     private static final Logger log = LoggerFactory.getLogger(DeliveryServiceImpl.class);
@@ -35,6 +35,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private TaskWindowService taskWindowService;
 
     @Value("${backend.url}")
     private String url;
