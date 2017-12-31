@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -30,7 +31,10 @@ public class TadeasUITest {
 
 	@Before
 	public void setUp() {
-		driver =  new ChromeDriver();
+		ChromeOptions chromeOptions = new ChromeOptions();
+		chromeOptions.addArguments("--headless");
+		chromeOptions.setBinary("/usr/bin/google-chrome");
+		driver =  new ChromeDriver(chromeOptions);
 		baseUrl = "http://localhost:"+Integer.toString(port)+"/";
 	}
 
