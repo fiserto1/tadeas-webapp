@@ -1,6 +1,7 @@
 package tadeas.data;
 
 import tadeas.dto.DeliveryDTO;
+import tadeas.dto.UserDTO;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,24 +14,23 @@ public class Delivery implements DeliveryI, Serializable {
     private String solution;
     private Date deliveryDate;
     private Boolean valid;
-    private Integer deliveryUser;
+    private UserDTO deliveryUser;
     private Date acceptanceDate;
-    private Integer acceptanceUser;
+    private UserDTO acceptanceUser;
     private String acceptanceMessage;
     private String acceptanceBinary;
     private Boolean acceptation;
 
-    public Delivery(DeliveryDTO endpoint) {
+    public Delivery(DeliveryDTO endpoint, UserDTO deliveryUser, UserDTO acceptanceUser) {
         this.id = endpoint.getId();
         this.solution = endpoint.getSolution();
         this.deliveryDate = endpoint.getDeliveryDate();
         this.valid = endpoint.isValid();
-        this.deliveryUser = endpoint.getDeliveryUser();
         this.acceptanceDate = endpoint.getAcceptanceDate();
-        this.deliveryUser = endpoint.getDeliveryUser();
+        this.deliveryUser = deliveryUser;
         this.acceptanceMessage = endpoint.getAcceptanceMessage();
         this.acceptanceBinary = endpoint.getAcceptanceBinary();
-        this.acceptanceUser = endpoint.getAcceptanceUser();
+        this.acceptanceUser = acceptanceUser;
         this.acceptation = endpoint.isAcceptation();
 
     }
@@ -67,11 +67,11 @@ public class Delivery implements DeliveryI, Serializable {
         this.valid = valid;
     }
 
-    public Integer getDeliveryUser() {
+    public UserDTO getDeliveryUser() {
         return deliveryUser;
     }
 
-    public void setDeliveryUser(int deliveryUser) {
+    public void setDeliveryUser(UserDTO deliveryUser) {
         this.deliveryUser = deliveryUser;
     }
 
@@ -83,11 +83,11 @@ public class Delivery implements DeliveryI, Serializable {
         this.acceptanceDate = acceptanceDate;
     }
 
-    public Integer getAcceptanceUser() {
+    public UserDTO getAcceptanceUser() {
         return acceptanceUser;
     }
 
-    public void setAcceptanceUser(int acceptanceUser) {
+    public void setAcceptanceUser(UserDTO acceptanceUser) {
         this.acceptanceUser = acceptanceUser;
     }
 

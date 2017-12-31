@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import tadeas.data.SessionKeyI;
-import tadeas.dto.TaskDTO;
+import tadeas.data.Task;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.*;
@@ -39,7 +39,7 @@ public class TaskServiceImplTest {
 
     @Test
     public void getExistingTask() throws Exception {
-        TaskDTO returnedTask = service.getTask(1);
+        Task returnedTask = service.getTask(1);
         assertEquals(1, returnedTask.getId());
         assertEquals("Task1", returnedTask.getName());
     }
@@ -47,7 +47,7 @@ public class TaskServiceImplTest {
 
     @Test(expected = HttpClientErrorException.class)
     public void getNonexistentTask() throws Exception {
-        TaskDTO returnedTask = service.getTask(40);
+        Task returnedTask = service.getTask(40);
     }
 
 }

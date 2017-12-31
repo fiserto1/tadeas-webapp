@@ -2,10 +2,10 @@ package tadeas.service;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import tadeas.data.Task;
+import tadeas.dto.UserDTO;
 
 @Lazy
 @Service
-public interface TaskService {
-    Task getTask(int taskId);
+public interface UserService {
+    UserDTO getUser(Integer userId);
 }

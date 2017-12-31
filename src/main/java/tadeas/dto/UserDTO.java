@@ -12,7 +12,7 @@ public class UserDTO implements Serializable {
     private Integer id;
     private String userName;
     private String firstName;
-    private String lasName;
+    private String lastName;
     private String email;
     private String role;
     private List<GroupDTO> groups;
@@ -45,12 +45,12 @@ public class UserDTO implements Serializable {
         this.firstName = firstName;
     }
 
-    public String getLasName() {
-        return lasName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLasName(String lasName) {
-        this.lasName = lasName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -106,7 +106,7 @@ public class UserDTO implements Serializable {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", lasName='" + lasName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 ", groups=" + groups +

@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import tadeas.data.Delivery;
 import tadeas.data.DeliveryI;
 import tadeas.dto.DeliveryDTO;
+import tadeas.dto.UserDTO;
 import tadeas.form.EvaluationForm;
 import tadeas.storage.StorageService;
 
@@ -38,6 +39,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Autowired
     private TaskWindowService taskWindowService;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${backend.url}")
     private String url;
@@ -80,16 +84,25 @@ public class DeliveryServiceImpl implements DeliveryService {
     public Map<Integer, List<DeliveryI>> getDeliveries() {
         String deliveryUrl = url + "delivery";
         ResponseEntity<DeliveryDTO[]> responseDelivery = restTemplate.getForEntity(deliveryUrl, DeliveryDTO[].class);
-        DeliveryDTO[] delivery = responseDelivery.getBody();
+        DeliveryDTO[] deliveries = responseDelivery.getBody();
+
         Map<Integer, List<DeliveryI>> result = new HashMap<>();
-        for (DeliveryDTO deli : delivery) {
-            log.info(deli.toString());
-            int windowsId = deli.getTaskDeliveryWindow().getId();
+        if (deliveries == null) {
+            return null;
+        }
+
+        for (DeliveryDTO deliveryDTO : deliveries) {
+            log.info(deliveryDTO.toString());
+            UserDTO deliveryUser = userService.getUser(deliveryDTO.getDeliveryUser());
+            UserDTO acceptanceUser = userService.getUser(deliveryDTO.getAcceptanceUser());
+            Delivery delivery = new Delivery(deliveryDTO, deliveryUser, acceptanceUser);
+
+            int windowsId = deliveryDTO.getTaskDeliveryWindow().getId();
             if (result.containsKey(windowsId)) {
-                result.get(windowsId).add(new Delivery(deli));
+                result.get(windowsId).add(delivery);
             } else {
                 List<DeliveryI> delis = new ArrayList<>();
-                delis.add(new Delivery(deli));
+                delis.add(delivery);
                 result.put(windowsId, delis);
             }
         }

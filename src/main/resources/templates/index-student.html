@@ -71,9 +71,12 @@
                     <div class="modal-dialog modal-sm" role="document">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <p th:if="${task.lastDelivery.acceptanceUser}"><strong
-                                        th:text="#{task.acceptanceUser}+': '"></strong><span
-                                        th:text="${task.lastDelivery.acceptanceUser}"></span></p>
+                                <p th:if="${task.lastDelivery.acceptanceUser}">
+                                    <strong th:text="#{task.acceptanceUser}+': '"></strong>
+                                    <span th:text="${task.lastDelivery.acceptanceUser.firstName} + ' '
+                                    + ${task.lastDelivery.acceptanceUser.lastName}">
+                                    </span>
+                                </p>
                                 <p th:if="${task.lastDelivery.acceptanceMessage}"><strong
                                         th:text="#{task.acceptanceMessage}+': '"></strong><span
                                         th:text="${task.lastDelivery.acceptanceMessage}"></span></p>

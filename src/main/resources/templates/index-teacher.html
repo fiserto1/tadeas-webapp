@@ -48,12 +48,19 @@
         <div class="panel-body">
             <div class="row delivery-list" th:each="delivery, iterStat: ${task.deliveries}"
                  th:classappend="${iterStat.odd}? 'odd' : 'even'">
-                <div class="col-xs-12 col-sm-3" th:text="${delivery.deliveryUser}"></div>
                 <div class="col-xs-12 col-sm-3"
-                     th:text="${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}"></div>
-                <div class="col-xs-12 col-sm-3"><a th:href="@{/downloadDelivery(id=${delivery.id})}"><span
-                        class="glyphicon glyphicon-download"></span></a><span class="glyphicon glyphicon-ok"
-                                                                              th:if="${delivery.valid}"></span></div>
+                     th:text="${delivery.deliveryUser.firstName}+ ' ' + ${delivery.deliveryUser.lastName}">
+                </div>
+                <div class="col-xs-12 col-sm-3"
+                     th:text="${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}">
+
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <a th:href="@{/downloadDelivery(id=${delivery.id})}">
+                        <span class="glyphicon glyphicon-download"></span>
+                    </a>
+                    <span class="glyphicon glyphicon-ok" th:if="${delivery.valid}"></span>
+                </div>
                 <div class="col-xs-12 col-sm-3" th:if="${delivery.isAccepted()}">
                     <a href="#" data-toggle="modal" th:attr="data-target='#deliverymodalid-'+${delivery.id}">
                         <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"
@@ -67,8 +74,10 @@
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <p th:if="${delivery.acceptanceUser}"><strong
-                                            th:text="#{task.acceptanceUser}+': '"></strong><span
-                                            th:text="${delivery.acceptanceUser}"></span></p>
+                                            th:text="#{task.acceptanceUser}+': '"></strong>
+                                        <span th:text="${task.lastDelivery.acceptanceUser.firstName}+ ' ' + ${task.lastDelivery.acceptanceUser.lastName}">
+                                        </span>
+                                    </p>
                                     <p th:if="${delivery.acceptanceMessage}"><strong
                                             th:text="#{task.acceptanceMessage}+': '"></strong><span
                                             th:text="${delivery.acceptanceMessage}"></span></p>

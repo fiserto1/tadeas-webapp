@@ -1,5 +1,7 @@
 package tadeas.data;
 
+import tadeas.dto.UserDTO;
+
 import java.util.Date;
 
 public interface DeliveryI {
@@ -20,17 +22,17 @@ public interface DeliveryI {
 
     void setValid(boolean valid);
 
-    Integer getDeliveryUser();
+    UserDTO getDeliveryUser();
 
-    void setDeliveryUser(int deliveryUser);
+    void setDeliveryUser(UserDTO deliveryUser);
 
     Date getAcceptanceDate();
 
     void setAcceptanceDate(Date acceptanceDate);
 
-    Integer getAcceptanceUser();
+    UserDTO getAcceptanceUser();
 
-    void setAcceptanceUser(int acceptanceUser);
+    void setAcceptanceUser(UserDTO acceptanceUser);
 
     String getAcceptanceMessage();
 

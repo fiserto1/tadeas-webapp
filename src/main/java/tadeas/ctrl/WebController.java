@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import tadeas.data.RoleType;
 import tadeas.data.SessionKeyI;
+import tadeas.data.Task;
 import tadeas.data.TaskWindowI;
-import tadeas.dto.TaskDTO;
 import tadeas.form.EvaluationForm;
 import tadeas.service.DeliveryService;
 import tadeas.service.TaskService;
@@ -148,7 +148,7 @@ public class WebController {
         }
 
         int taskId = Integer.parseInt(request.getParameter("id"));
-        TaskDTO task = taskService.getTask(taskId);
+        Task task = taskService.getTask(taskId);
 
         model.addAttribute("task", task);
 

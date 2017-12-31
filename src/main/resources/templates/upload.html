@@ -42,7 +42,7 @@
                 </tr>
                 <tr>
                     <th th:text="#{task.issuer}"></th>
-                    <td th:text="${task.issuer}"></td>
+                    <td th:text="${task.issuer.firstName} + ' ' + ${task.issuer.lastName}"></td>
                 </tr>
                 <tr>
                     <th th:text="#{task.active}"></th>

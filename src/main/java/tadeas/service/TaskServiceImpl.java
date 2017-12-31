@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import tadeas.data.Task;
 import tadeas.dto.TaskDTO;
+import tadeas.dto.UserDTO;
 
 @Lazy
 @Primary
@@ -20,13 +22,19 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private UserService userService;
+
     @Value("${backend.url}")
     private String url;
 
     @Override
-    public TaskDTO getTask(int taskId) {
+    public Task getTask(int taskId) {
         final String taskUrl = url + "task/" + taskId;
         ResponseEntity<TaskDTO> responseEntity = restTemplate.getForEntity(taskUrl, TaskDTO.class);
-        return responseEntity.getBody();
+        TaskDTO taskDTO = responseEntity.getBody();
+
+        UserDTO issuer = userService.getUser(taskDTO.getIssuer());
+        return new Task(taskDTO, issuer);
     }
 }
