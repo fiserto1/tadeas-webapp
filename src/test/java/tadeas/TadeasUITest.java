@@ -22,49 +22,58 @@ import static junit.framework.TestCase.assertEquals;
 @AutoConfigureMockMvc
 public class TadeasUITest {
 
-	private String baseUrl;
+    private String baseUrl;
 
-	@LocalServerPort
-	private int port;
+    @LocalServerPort
+    private int port;
 
-	WebDriver driver;
+    WebDriver driver;
 
 
-	@Before
-	public void setUp() {
-		DesiredCapabilities caps = new DesiredCapabilities();
+    @Before
+    public void setUp() {
+        DesiredCapabilities caps = new DesiredCapabilities();
 //		caps.setJavascriptEnabled(true);
 //		caps.setCapability("takesScreenshot", true);
-		caps.setCapability(
-				PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
-				"phantomjs"
-		);
+
+        String osName = System.getProperty("os.name");
+        String phantomBinaryPath;
+        if (osName.startsWith("Windows")) {
+            phantomBinaryPath = "phantomjs.exe";
+        } else {
+            phantomBinaryPath = "phantomjs";
+        }
+
+        caps.setCapability(
+                PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
+                phantomBinaryPath
+        );
 //		driver =  new ChromeDriver(chromeOptions);
-		driver = new PhantomJSDriver(caps);
-		baseUrl = "http://localhost:"+Integer.toString(port)+"/";
-	}
+        driver = new PhantomJSDriver(caps);
+        baseUrl = "http://localhost:" + Integer.toString(port) + "/";
+    }
 
-	@Test
-	public void verifiesLoginStudent() throws Exception {
-		driver.get(baseUrl+"login");
-		assertEquals(baseUrl+"login", driver.getCurrentUrl());
-		driver.findElement(By.cssSelector("#username")).sendKeys("student");
-		driver.findElement(By.cssSelector("#password")).sendKeys("student");
-		driver.findElement(By.cssSelector("button")).click();
-		assertEquals(baseUrl, driver.getCurrentUrl());
-		assertEquals(driver.findElement(By.cssSelector("h2")).getText(), "Seznam úloh");
-		driver.quit();
-	}
+    @Test
+    public void verifiesLoginStudent() throws Exception {
+        driver.get(baseUrl + "login");
+        assertEquals(baseUrl + "login", driver.getCurrentUrl());
+        driver.findElement(By.cssSelector("#username")).sendKeys("student");
+        driver.findElement(By.cssSelector("#password")).sendKeys("student");
+        driver.findElement(By.cssSelector("button")).click();
+        assertEquals(baseUrl, driver.getCurrentUrl());
+        assertEquals(driver.findElement(By.cssSelector("h2")).getText(), "Seznam úloh");
+        driver.quit();
+    }
 
-	@Test
-	public void verifiesLoginTeacher() throws Exception {
-		driver.get(baseUrl+"login");
-		assertEquals(baseUrl+"login", driver.getCurrentUrl());
-		driver.findElement(By.cssSelector("#username")).sendKeys("teacher");
-		driver.findElement(By.cssSelector("#password")).sendKeys("teacher");
-		driver.findElement(By.cssSelector("button")).click();
-		assertEquals(baseUrl, driver.getCurrentUrl());
-		assertEquals(driver.findElement(By.cssSelector("h2")).getText(), "Seznam úloh");
-		driver.quit();
-	}
+    @Test
+    public void verifiesLoginTeacher() throws Exception {
+        driver.get(baseUrl + "login");
+        assertEquals(baseUrl + "login", driver.getCurrentUrl());
+        driver.findElement(By.cssSelector("#username")).sendKeys("teacher");
+        driver.findElement(By.cssSelector("#password")).sendKeys("teacher");
+        driver.findElement(By.cssSelector("button")).click();
+        assertEquals(baseUrl, driver.getCurrentUrl());
+        assertEquals(driver.findElement(By.cssSelector("h2")).getText(), "Seznam úloh");
+        driver.quit();
+    }
 }
