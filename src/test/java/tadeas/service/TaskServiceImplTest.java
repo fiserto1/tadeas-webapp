@@ -1,4 +1,4 @@
-package tadeas;
+package tadeas.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,15 +11,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import tadeas.data.SessionKeyI;
 import tadeas.dto.TaskDTO;
-import tadeas.service.TaskService;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @EnableAutoConfiguration
-public class TaskServiceTest {
+public class TaskServiceImplTest {
+    @Test
+    public void getTask() {
+    }
 
     @MockBean
     private SessionKeyI token;
@@ -46,6 +49,5 @@ public class TaskServiceTest {
     public void getNonexistentTask() throws Exception {
         TaskDTO returnedTask = service.getTask(40);
     }
-
 
 }
