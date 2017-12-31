@@ -37,7 +37,7 @@ public class TadeasUITest {
 //		caps.setCapability("takesScreenshot", true);
 		caps.setCapability(
 				PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
-				"/home/mejty/phantomjs"
+				"phantomjs"
 		);
 //		driver =  new ChromeDriver(chromeOptions);
 		driver = new PhantomJSDriver(caps);
