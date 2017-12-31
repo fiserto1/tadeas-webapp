@@ -17,6 +17,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'checkstyle'
 
 group 'cz.cvut.student'
 version '1.0-SNAPSHOT'
@@ -27,6 +28,17 @@ targetCompatibility = 1.8
 //    baseName = 'tadeas-webapp'
 //    version =  '1.0-SNAPSHOT'
 //}
+
+checkstyle {
+    ignoreFailures = true
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled true
+    }
+}
+
 
 repositories {
     mavenCentral()
@@ -56,3 +68,5 @@ dependencies {
 configurations {
     compile.exclude module: "spring-boot-starter-tomcat"
 }
+
+
