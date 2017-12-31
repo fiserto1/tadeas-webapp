@@ -6,8 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -31,10 +32,15 @@ public class TadeasUITest {
 
 	@Before
 	public void setUp() {
-		ChromeOptions chromeOptions = new ChromeOptions();
-		chromeOptions.addArguments("--headless");
-		chromeOptions.setBinary("/usr/bin/google-chrome");
-		driver =  new ChromeDriver(chromeOptions);
+		DesiredCapabilities caps = new DesiredCapabilities();
+//		caps.setJavascriptEnabled(true);
+//		caps.setCapability("takesScreenshot", true);
+		caps.setCapability(
+				PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
+				"/home/mejty/phantomjs"
+		);
+//		driver =  new ChromeDriver(chromeOptions);
+		driver = new PhantomJSDriver(caps);
 		baseUrl = "http://localhost:"+Integer.toString(port)+"/";
 	}
 
