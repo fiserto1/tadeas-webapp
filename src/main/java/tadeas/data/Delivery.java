@@ -2,9 +2,12 @@ package tadeas.data;
 
 import tadeas.dto.DeliveryDTO;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Delivery implements DeliveryI {
+public class Delivery implements DeliveryI, Serializable {
+
+    private static final long serialVersionUID = -7539016443804822699L;
 
     private int id;
     private String solution;
@@ -111,5 +114,36 @@ public class Delivery implements DeliveryI {
     @Override
     public boolean isEvaluated() {
         return acceptation != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Delivery delivery = (Delivery) o;
+
+        return id == delivery.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "id=" + id +
+                ", solution='" + solution + '\'' +
+                ", deliveryDate=" + deliveryDate +
+                ", valid=" + valid +
+                ", deliveryUser=" + deliveryUser +
+                ", acceptanceDate=" + acceptanceDate +
+                ", acceptanceUser=" + acceptanceUser +
+                ", acceptanceMessage='" + acceptanceMessage + '\'' +
+                ", acceptanceBinary='" + acceptanceBinary + '\'' +
+                ", acceptation=" + acceptation +
+                '}';
     }
 }

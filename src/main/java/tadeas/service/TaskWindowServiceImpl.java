@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Service
 @Lazy
-@RequestScope
 @Primary
+@Service
+@RequestScope
 public class TaskWindowServiceImpl implements TaskWindowService {
 
     private static final Logger log = LoggerFactory.getLogger(TaskWindowServiceImpl.class);
@@ -46,8 +46,6 @@ public class TaskWindowServiceImpl implements TaskWindowService {
         }
         return windows;
     }
-
-
 
     private List<TaskWindowI> scrapeWindows() {
         String windowsUrl = url + "windows";

@@ -8,7 +8,6 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeliveryWindowDTO implements Serializable {
-
     private static final long serialVersionUID = -8393921304784590261L;
 
     private int id;
@@ -85,6 +84,21 @@ public class DeliveryWindowDTO implements Serializable {
 
     public void setDefinition(String definition) {
         this.definition = definition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DeliveryWindowDTO that = (DeliveryWindowDTO) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override

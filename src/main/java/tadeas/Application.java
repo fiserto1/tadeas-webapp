@@ -54,7 +54,6 @@ public class Application implements WebMvcConfigurer {
         return new SessionKey(user.getSessionId());
     }
 
-
     @Bean
     @RequestScope
     @Lazy()

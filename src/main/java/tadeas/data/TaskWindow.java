@@ -3,11 +3,14 @@ package tadeas.data;
 import tadeas.dto.DeliveryWindowDTO;
 import tadeas.dto.TaskDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TaskWindow implements TaskWindowI{
+public class TaskWindow implements TaskWindowI, Serializable {
+    private static final long serialVersionUID = 5885065083351165836L;
+
     private int id;
     private TaskDTO task;
     private int issuer;
@@ -18,8 +21,7 @@ public class TaskWindow implements TaskWindowI{
     private String definition;
     private List<DeliveryI> deliveries;
 
-
-    public TaskWindow(DeliveryWindowDTO endpoint){
+    public TaskWindow(DeliveryWindowDTO endpoint) {
         this.id = endpoint.getId();
         this.task = endpoint.getTask();
         this.issuer = endpoint.getIssuer();
@@ -103,12 +105,27 @@ public class TaskWindow implements TaskWindowI{
         this.deliveries = deliveries;
     }
 
-    public DeliveryI getLastDelivery(){
-       return deliveries.get(this.deliveries.size() - 1);
+    public DeliveryI getLastDelivery() {
+        return deliveries.get(this.deliveries.size() - 1);
     }
 
-    public boolean isAccepted(){
+    public boolean isAccepted() {
         return getLastDelivery().isAccepted();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TaskWindow that = (TaskWindow) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override

@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 @Lazy
-@Service
 @Primary
+@Service
 public class DeliveryServiceImpl implements DeliveryService {
 
     private static final Logger log = LoggerFactory.getLogger(DeliveryServiceImpl.class);
