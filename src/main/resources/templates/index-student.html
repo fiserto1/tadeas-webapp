@@ -30,6 +30,15 @@
     <div class="alert alert-danger" role="alert" th:if="${alertError}" th:text="#{delivery.confirm.error}"></div>
     <div class="alert alert-info" role="alert" th:if="${alertOk}" th:text="#{delivery.confirm.ok}"></div>
 
+    <!--FILTER-->
+    <div class="row filter" >
+        <span th:text="#{filter.title}"></span>
+        <button id="filterButtonEvaluated" class="btn btn-default btn-xs" th:text="#{filter.evaluated}"></button>
+        <button id="filterButtonNotEvaluated" class="btn btn-default btn-xs" th:text="#{filter.notEvaluated}"></button>
+        <button id="showAll" class="btn btn-default btn-xs" th:text="#{filter.all}"></button>
+    </div>
+
+
     <!--CONTENT-->
     <table class="table table-striped table-responsive">
         <thead>
@@ -38,7 +47,7 @@
         <th th:text="#{task.solution}"></th>
         <th th:text="#{task.acceptance}"></th>
         </thead>
-        <tbody>
+        <tbody id="task-list">
 
         <tr th:each="task: ${taskWindows}">
             <td>
@@ -107,6 +116,27 @@
     });
     $(".alert").fadeTo(15000, 500).slideUp(1000, function () {
         $(".alert").alert('close');
+    });
+    $("#filterButtonEvaluated").click(function () {
+        var rows = $("#task-list").find("tr").hide();
+        rows.filter(function( index ) {
+            console.log(index);
+            console.log(rows[index]);
+            console.log(rows[index].getElementsByClassName("glyphicon-ok"));
+            return rows[index].getElementsByClassName("glyphicon-ok").length === 1;
+        }).show();
+    });
+    $("#filterButtonNotEvaluated").click(function () {
+        var rows = $("#task-list").find("tr").hide();
+        rows.filter(function( index ) {
+            console.log(index);
+            console.log(rows[index]);
+            console.log(rows[index].getElementsByClassName("glyphicon-ok"));
+            return rows[index].getElementsByClassName("glyphicon-ok").length === 0;
+        }).show();
+    });
+    $("#showAll").click(function () {
+        var rows = $("#task-list").find("tr").show();
     });
 </script>
 </body>
