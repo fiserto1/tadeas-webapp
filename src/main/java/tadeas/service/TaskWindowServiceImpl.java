@@ -60,14 +60,14 @@ public class TaskWindowServiceImpl implements TaskWindowService {
         }
 
         if (isAfterDeadline(window)) {
-            window.setActive(true);
+            window.setActive(false);
         }
 
         return new TaskWindow(window);
     }
 
     private boolean isAfterDeadline(DeliveryWindowDTO window) {
-        return window.getDeadlineDate().isAfter(LocalDate.now());
+        return LocalDate.now().isAfter(window.getDeadlineDate());
     }
 
     private List<TaskWindowI> scrapeWindows() {
@@ -76,6 +76,9 @@ public class TaskWindowServiceImpl implements TaskWindowService {
         DeliveryWindowDTO[] windows = responseEntity.getBody();
         List<TaskWindowI> result = new ArrayList<>();
         for (DeliveryWindowDTO win : windows) {
+            if (isAfterDeadline(win)) {
+                win.setActive(false);
+            }
             log.info(win.toString());
             result.add(new TaskWindow(win));
         }

@@ -55,7 +55,7 @@
                 </tr>
                 <tr>
                     <th th:text="#{task.issueDate}"></th>
-                    <td th:text="${task.issueDate}"></td>
+                    <td th:text="${#temporals.format(task.issueDate, #messages.msg('dateformat'))}"></td>
                 </tr>
                 <tr>
                     <th th:text="#{task.definition}"></th>
@@ -65,7 +65,7 @@
             </table>
         </div>
     </div>
-    <div class="col-md-6">
+    <div th:if="${task.active}" class="col-md-6">
         <form action="upload.html" th:action="@{/uploadFile(id=${task.id})}" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label th:text="#{upload.input.label}">:</label>
@@ -75,6 +75,9 @@
                 <button type="submit" class="btn btn-primary" th:text="#{upload.button}"></button>
             </div>
         </form>
+    </div>
+    <div th:unless="${task.active}" class="col-md-6" th:text="#{task.notActive}">
+
     </div>
 </div>
 
