@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import tadeas.data.Task;
+import tadeas.data.TaskWindow;
 import tadeas.dto.TaskDTO;
 import tadeas.dto.UserDTO;
 
@@ -25,6 +26,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TaskWindowService taskWindowService;
+
     @Value("${backend.url}")
     private String url;
 
@@ -33,6 +37,18 @@ public class TaskServiceImpl implements TaskService {
         final String taskUrl = url + "task/" + taskId;
         ResponseEntity<TaskDTO> responseEntity = restTemplate.getForEntity(taskUrl, TaskDTO.class);
         TaskDTO taskDTO = responseEntity.getBody();
+
+        if (taskDTO == null) {
+            throw new IllegalArgumentException("Task not found");
+        }
+
+        TaskWindow taskWindow = taskWindowService.getTaskWindow(taskId);
+
+        if (taskWindow == null) {
+            throw new IllegalArgumentException("Task window not found.");
+        }
+
+        taskDTO.setActive(taskWindow.isActive());
 
         UserDTO issuer = userService.getUser(taskDTO.getIssuer());
         return new Task(taskDTO, issuer);

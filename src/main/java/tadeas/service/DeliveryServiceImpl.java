@@ -38,16 +38,19 @@ public class DeliveryServiceImpl implements DeliveryService {
     private RestTemplate restTemplate;
 
     @Autowired
-    private TaskWindowService taskWindowService;
+    private TaskService taskService;
 
     @Autowired
     private UserService userService;
+
+
 
     @Value("${backend.url}")
     private String url;
 
     @Override
     public boolean confirmDelivery(int deliveryId) {
+
         String deliveryUrl = url + "delivery/" + deliveryId;
         Map<String, Boolean> body = new HashMap<>();
         body.put("valid", true);

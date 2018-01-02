@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeliveryDTO implements Serializable {
@@ -14,11 +14,11 @@ public class DeliveryDTO implements Serializable {
     private DeliveryWindowDTO taskDeliveryWindow;
     private String solution;
     @JsonFormat(pattern = "yyyy-dd-MM")
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
     private Boolean valid;
     private Integer deliveryUser;
     @JsonFormat(pattern = "yyyy-dd-MM")
-    private Date acceptanceDate;
+    private LocalDate acceptanceDate;
     private Integer acceptanceUser;
     private String acceptanceMessage;
     private String acceptanceBinary;
@@ -49,11 +49,11 @@ public class DeliveryDTO implements Serializable {
         this.solution = solution;
     }
 
-    public Date getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
@@ -73,11 +73,11 @@ public class DeliveryDTO implements Serializable {
         this.deliveryUser = deliveryUser;
     }
 
-    public Date getAcceptanceDate() {
+    public LocalDate getAcceptanceDate() {
         return acceptanceDate;
     }
 
-    public void setAcceptanceDate(Date acceptanceDate) {
+    public void setAcceptanceDate(LocalDate acceptanceDate) {
         this.acceptanceDate = acceptanceDate;
     }
 

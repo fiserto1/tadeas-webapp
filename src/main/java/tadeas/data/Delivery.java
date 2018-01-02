@@ -4,7 +4,7 @@ import tadeas.dto.DeliveryDTO;
 import tadeas.dto.UserDTO;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Delivery implements DeliveryI, Serializable {
 
@@ -12,10 +12,10 @@ public class Delivery implements DeliveryI, Serializable {
 
     private int id;
     private String solution;
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
     private Boolean valid;
     private UserDTO deliveryUser;
-    private Date acceptanceDate;
+    private LocalDate acceptanceDate;
     private UserDTO acceptanceUser;
     private String acceptanceMessage;
     private String acceptanceBinary;
@@ -51,11 +51,11 @@ public class Delivery implements DeliveryI, Serializable {
         this.solution = solution;
     }
 
-    public Date getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
@@ -75,11 +75,11 @@ public class Delivery implements DeliveryI, Serializable {
         this.deliveryUser = deliveryUser;
     }
 
-    public Date getAcceptanceDate() {
+    public LocalDate getAcceptanceDate() {
         return acceptanceDate;
     }
 
-    public void setAcceptanceDate(Date acceptanceDate) {
+    public void setAcceptanceDate(LocalDate acceptanceDate) {
         this.acceptanceDate = acceptanceDate;
     }
 

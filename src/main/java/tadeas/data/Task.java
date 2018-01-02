@@ -4,7 +4,7 @@ import tadeas.dto.TaskDTO;
 import tadeas.dto.UserDTO;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Task implements Serializable {
     private static final long serialVersionUID = 8220082182249564449L;
@@ -13,7 +13,7 @@ public class Task implements Serializable {
     private String name;
     private UserDTO issuer;
     private boolean active;
-    private Date issueDate;
+    private LocalDate issueDate;
     private String definition;
 
     public Task(TaskDTO taskDTO, UserDTO issuer) {
@@ -21,8 +21,8 @@ public class Task implements Serializable {
         this.name = taskDTO.getName();
         this.issuer = issuer;
         this.active = taskDTO.isActive();
-        this.issueDate = getIssueDate();
-        this.definition = getDefinition();
+        this.issueDate = taskDTO.getIssueDate();
+        this.definition = taskDTO.getDefinition();
     }
 
     public int getId() {
@@ -57,11 +57,11 @@ public class Task implements Serializable {
         this.active = active;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 

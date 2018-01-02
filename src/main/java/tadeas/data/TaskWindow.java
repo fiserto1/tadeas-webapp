@@ -4,8 +4,8 @@ import tadeas.dto.DeliveryWindowDTO;
 import tadeas.dto.TaskDTO;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TaskWindow implements TaskWindowI, Serializable {
@@ -15,21 +15,21 @@ public class TaskWindow implements TaskWindowI, Serializable {
     private TaskDTO task;
     private int issuer;
     private boolean active;
-    private Date issueDate;
-    private Date startDate;
-    private Date deadlineDate;
+    private LocalDate issueDate;
+    private LocalDate startDate;
+    private LocalDate deadlineDate;
     private String definition;
     private List<DeliveryI> deliveries;
 
-    public TaskWindow(DeliveryWindowDTO endpoint) {
-        this.id = endpoint.getId();
-        this.task = endpoint.getTask();
-        this.issuer = endpoint.getIssuer();
-        this.active = endpoint.isActive();
-        this.issueDate = endpoint.getIssueDate();
-        this.startDate = endpoint.getStartDate();
-        this.deadlineDate = endpoint.getDeadlineDate();
-        this.definition = endpoint.getDefinition();
+    public TaskWindow(DeliveryWindowDTO windowDTO) {
+        this.id = windowDTO.getId();
+        this.task = windowDTO.getTask();
+        this.issuer = windowDTO.getIssuer();
+        this.active = windowDTO.isActive();
+        this.issueDate = windowDTO.getIssueDate();
+        this.startDate = windowDTO.getStartDate();
+        this.deadlineDate = windowDTO.getDeadlineDate();
+        this.definition = windowDTO.getDefinition();
         this.deliveries = new ArrayList<>();
     }
 
@@ -65,27 +65,27 @@ public class TaskWindow implements TaskWindowI, Serializable {
         this.active = active;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getDeadlineDate() {
+    public LocalDate getDeadlineDate() {
         return deadlineDate;
     }
 
-    public void setDeadlineDate(Date deadlineDate) {
+    public void setDeadlineDate(LocalDate deadlineDate) {
         this.deadlineDate = deadlineDate;
     }
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeliveryWindowDTO implements Serializable {
@@ -15,11 +15,11 @@ public class DeliveryWindowDTO implements Serializable {
     private int issuer;
     private boolean active;
     @JsonFormat(pattern = "yyyy-dd-MM")
-    private Date issueDate;
+    private LocalDate issueDate;
     @JsonFormat(pattern = "yyyy-dd-MM")
-    private Date startDate;
+    private LocalDate startDate;
     @JsonFormat(pattern = "yyyy-dd-MM")
-    private Date deadlineDate;
+    private LocalDate deadlineDate;
     private String definition;
 
     public int getId() {
@@ -54,27 +54,27 @@ public class DeliveryWindowDTO implements Serializable {
         this.active = active;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getDeadlineDate() {
+    public LocalDate getDeadlineDate() {
         return deadlineDate;
     }
 
-    public void setDeadlineDate(Date deadlineDate) {
+    public void setDeadlineDate(LocalDate deadlineDate) {
         this.deadlineDate = deadlineDate;
     }
 

@@ -36,7 +36,7 @@
             <div class="row task-header">
                 <div class="col-xs-12 col-sm-6"><h3 th:text="${task.task.name}"></h3></div>
                 <div class="col-xs-12 col-sm-6 text-right"
-                     th:text="${#dates.format(task.deadlineDate, #messages.msg('dateformat'))}"></div>
+                     th:text="${#temporals.format(task.deadlineDate, #messages.msg('dateformat'))}"></div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-3" th:text="#{task.user}"></div>
@@ -52,7 +52,7 @@
                      th:text="${delivery.deliveryUser.firstName}+ ' ' + ${delivery.deliveryUser.lastName}">
                 </div>
                 <div class="col-xs-12 col-sm-3"
-                     th:text="${#dates.format(delivery.deliveryDate, #messages.msg('dateformat'))}">
+                     th:text="${#temporals.format(delivery.deliveryDate, #messages.msg('dateformat'))}">
 
                 </div>
                 <div class="col-xs-12 col-sm-3">
@@ -87,7 +87,7 @@
                                             class="glyphicon glyphicon-download" aria-hidden="true"></span></a></p>
                                     <p th:if="${delivery.acceptanceBinary}"><strong
                                             th:text="#{task.acceptanceBinary}+': '"></strong><span
-                                            th:text="${#dates.format(delivery.acceptanceDate, #messages.msg('dateformat'))}"></span>
+                                            th:text="${#temporals.format(delivery.acceptanceDate, #messages.msg('dateformat'))}"></span>
                                     </p>
                                 </div>
                             </div>

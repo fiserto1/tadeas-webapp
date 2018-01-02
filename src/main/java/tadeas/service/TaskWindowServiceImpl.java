@@ -15,6 +15,7 @@ import tadeas.data.DeliveryI;
 import tadeas.data.TaskWindow;
 import tadeas.data.TaskWindowI;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,30 @@ public class TaskWindowServiceImpl implements TaskWindowService {
         return windows;
     }
 
+    @Override
+    public TaskWindow getTaskWindow(int taskId) {
+        String windowsUrl = url + "window/" + taskId;
+        ResponseEntity<DeliveryWindowDTO> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowDTO.class);
+
+        DeliveryWindowDTO window = responseEntity.getBody();
+
+        if (window == null) {
+            throw new IllegalArgumentException("Task window not found.");
+        }
+
+        if (isAfterDeadline(window)) {
+            window.setActive(true);
+        }
+
+        return new TaskWindow(window);
+    }
+
+    private boolean isAfterDeadline(DeliveryWindowDTO window) {
+        return window.getDeadlineDate().isAfter(LocalDate.now());
+    }
+
     private List<TaskWindowI> scrapeWindows() {
-        String windowsUrl = url + "windows";
+        String windowsUrl = url + "window";
         ResponseEntity<DeliveryWindowDTO[]> responseEntity = restTemplate.getForEntity(windowsUrl, DeliveryWindowDTO[].class);
         DeliveryWindowDTO[] windows = responseEntity.getBody();
         List<TaskWindowI> result = new ArrayList<>();

@@ -2,7 +2,7 @@ package tadeas.data;
 
 import tadeas.dto.TaskDTO;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TaskWindowI {
@@ -23,17 +23,17 @@ public interface TaskWindowI {
 
     void setActive(boolean active);
 
-    Date getIssueDate();
+    LocalDate getIssueDate();
 
-    void setIssueDate(Date issueDate);
+    void setIssueDate(LocalDate issueDate);
 
-    Date getStartDate();
+    LocalDate getStartDate();
 
-    void setStartDate(Date startDate);
+    void setStartDate(LocalDate startDate);
 
-    Date getDeadlineDate();
+    LocalDate getDeadlineDate();
 
-    void setDeadlineDate(Date deadlineDate);
+    void setDeadlineDate(LocalDate deadlineDate);
 
     String getDefinition();
 

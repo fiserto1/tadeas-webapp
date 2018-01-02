@@ -3,7 +3,7 @@ package tadeas.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TaskDTO implements Serializable {
@@ -13,7 +13,7 @@ public class TaskDTO implements Serializable {
     private String name;
     private int issuer;
     private boolean active;
-    private Date issueDate;
+    private LocalDate issueDate;
     private String definition;
 
     public TaskDTO() {
@@ -51,11 +51,11 @@ public class TaskDTO implements Serializable {
         this.active = active;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 

@@ -2,7 +2,7 @@ package tadeas.data;
 
 import tadeas.dto.UserDTO;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface DeliveryI {
 
@@ -14,9 +14,9 @@ public interface DeliveryI {
 
     void setSolution(String solution);
 
-    Date getDeliveryDate();
+    LocalDate getDeliveryDate();
 
-    void setDeliveryDate(Date deliveryDate);
+    void setDeliveryDate(LocalDate deliveryDate);
 
     Boolean isValid();
 
@@ -26,9 +26,9 @@ public interface DeliveryI {
 
     void setDeliveryUser(UserDTO deliveryUser);
 
-    Date getAcceptanceDate();
+    LocalDate getAcceptanceDate();
 
-    void setAcceptanceDate(Date acceptanceDate);
+    void setAcceptanceDate(LocalDate acceptanceDate);
 
     UserDTO getAcceptanceUser();
 
