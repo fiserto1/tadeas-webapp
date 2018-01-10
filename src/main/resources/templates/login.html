@@ -10,6 +10,8 @@
 
     <script type="text/javascript" src="webjars/jquery/3.2.1/jquery.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{js/validator.min.js}"></script>
+
 </head>
 <body>
 
@@ -27,14 +29,23 @@
 
     <!--CONTENT-->
     <div class="col-md-6">
-        <form th:action="@{/login}" method="post">
-            <div class="form-group">
+        <form th:action="@{/login}" method="post" data-toggle="validator">
+            <div class="form-group has-feedback">
                 <label for="username" th:text="#{login.username}">:</label>
-                <input type="text" class="form-control" name="username" id="username"/>
+                <input type="text" class="form-control" name="username" id="username" data-minlength="4"
+                       pattern="^[a-zA-Z0-9_]*$" required maxlength="100"
+                       th:attr="data-requiered-error=#{login.emptyLogin}, data-minlength-error=#{login.tooShortLogin}, data-pattern-error=#{login.patternBreakLogin}"
+                />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <label for="password" th:text="#{login.password}">:</label>
-                <input type="password" class="form-control" name="password" id="password">
+                <input type="password" class="form-control" name="password" id="password"  data-minlength="4"
+                       pattern="^[a-zA-Z0-9_]*$" required maxlength="100"
+                       th:attr="data-requiered-error=#{login.emptyPassword}, data-minlength-error=#{login.tooShortPassword}, data-pattern-error=#{login.patternBreakPaswword}">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
             <div>
                 <button type="submit" class="btn btn-primary" th:text="#{login.button}"></button>
