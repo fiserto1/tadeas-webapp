@@ -34,7 +34,7 @@
                 <label for="username" th:text="#{login.username}">:</label>
                 <input type="text" class="form-control" name="username" id="username" data-minlength="4"
                        pattern="^[a-zA-Z0-9_]*$" required maxlength="100"
-                       th:attr="data-requiered-error=#{login.emptyLogin}, data-minlength-error=#{login.tooShortLogin}, data-pattern-error=#{login.patternBreakLogin}"
+                       th:attr="data-required-error=#{login.emptyLogin}, data-minlength-error=#{login.tooShortLogin}, data-pattern-error=#{login.patternBreakLogin}"
                 />
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
@@ -43,7 +43,7 @@
                 <label for="password" th:text="#{login.password}">:</label>
                 <input type="password" class="form-control" name="password" id="password"  data-minlength="4"
                        pattern="^[a-zA-Z0-9_]*$" required maxlength="100"
-                       th:attr="data-requiered-error=#{login.emptyPassword}, data-minlength-error=#{login.tooShortPassword}, data-pattern-error=#{login.patternBreakPaswword}">
+                       th:attr="data-required-error=#{login.emptyPassword}, data-minlength-error=#{login.tooShortPassword}, data-pattern-error=#{login.patternBreakPaswword}">
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
             </div>
