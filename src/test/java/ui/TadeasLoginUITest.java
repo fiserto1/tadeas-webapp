@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -17,8 +19,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.test.context.junit4.SpringRunner;
 import tadeas.Application;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 
 //@WebMvcTest
@@ -85,17 +92,21 @@ public class TadeasLoginUITest {
 
     @Test
     public void verifiesLoginEmptyPassword() throws Exception {
-        assertLoginFail("teacher", "");
+        String errMsg = messageSource.getMessage("login.emptyPassword", null, localeCS);
+        String errMsg2 = messageSource.getMessage("login.tooShortPassword", null, localeCS);
+        assertLoginFail("teacher", "", errMsg, errMsg2);
     }
 
     @Test
     public void verifiesLoginMinLengthPassword() throws Exception {
-        assertLoginFail("teacher", "asd");
+        String errMsg = messageSource.getMessage("login.tooShortPassword", null, localeCS);
+        assertLoginFail("teacher", "asd", errMsg);
     }
 
     @Test
     public void verifiesLoginMinLengthUsername() throws Exception {
-        assertLoginFail("abc", "abcd");
+        String errMsg = messageSource.getMessage("login.tooShortLogin", null, localeCS);
+        assertLoginFail("abc", "abcd", errMsg);
     }
 
     @Test
@@ -125,6 +136,8 @@ public class TadeasLoginUITest {
         assertEquals(baseUrl + "login", driver.getCurrentUrl());
         driver.findElement(By.cssSelector("#username")).sendKeys(username);
         driver.findElement(By.cssSelector("#password")).sendKeys(password);
+
+        assertNoFEValidationError();
         driver.findElement(By.cssSelector("button")).click();
         assertEquals(baseUrl, driver.getCurrentUrl());
 
@@ -133,19 +146,70 @@ public class TadeasLoginUITest {
         driver.quit();
     }
 
-    private void assertLoginFail(String username, String password) {
+    private void assertLoginFail(String username, String password, String... expectedErrorMsgs) {
         driver.get(baseUrl + "login");
         assertEquals(baseUrl + "login", driver.getCurrentUrl());
-        driver.findElement(By.cssSelector("#username")).sendKeys(username);
-        driver.findElement(By.cssSelector("#password")).sendKeys(password);
+
+        final String usernameCssSelector = "#username";
+        WebElement usernameInput = driver.findElement(By.cssSelector(usernameCssSelector));
+        usernameInput.sendKeys(username);
+        blur(usernameCssSelector);
+
+        final String passCssSelector = "#password";
+        WebElement passwordInput = driver.findElement(By.cssSelector(passCssSelector));
+        passwordInput.sendKeys(password);
+        blur(passCssSelector);
+
+        assertFEValidationErrorIsShown(expectedErrorMsgs);
+
+        //SUBMIT FORM
         driver.findElement(By.cssSelector("button")).click();
-        assertEquals(baseUrl + "login?error", driver.getCurrentUrl());
 
         String loginTitle = messageSource.getMessage("login.title", null, localeCS);
         assertEquals(driver.findElement(By.cssSelector("h2")).getText(), loginTitle);
 
-        String loginAlert = messageSource.getMessage("login.badCredentials", null, localeCS);
-        assertEquals(driver.findElement(By.className("alert-danger")).getText(), loginAlert);
+        if (expectedErrorMsgs.length == 0) {
+            //Form was submitted and login failed
+            assertEquals(baseUrl + "login?error", driver.getCurrentUrl());
+
+            String loginAlert = messageSource.getMessage("login.badCredentials", null, localeCS);
+            assertEquals(driver.findElement(By.className("alert-danger")).getText(), loginAlert);
+        } else {
+            //Form was not submitted because of validation error
+            assertEquals(baseUrl + "login", driver.getCurrentUrl());
+        }
+
         driver.quit();
+    }
+
+    private void assertFEValidationErrorIsShown(String... expectedErrorMessages) {
+        if (expectedErrorMessages.length == 0) {
+            return;
+        }
+
+        List<WebElement> errorBlocks = driver.findElements(By.xpath("//div[@class='help-block with-errors']"));
+
+        List<String> shownErrorMsgs = new ArrayList<>();
+        for (WebElement errorBlock : errorBlocks) {
+            List<WebElement> temp = errorBlock.findElements(By.tagName("li"));
+            temp.stream().map(WebElement::getText).forEach(shownErrorMsgs::add);
+        }
+
+        assertFalse("No errors found, expected: " + expectedErrorMessages.length, shownErrorMsgs.isEmpty());
+        assertTrue(shownErrorMsgs.containsAll(Arrays.asList(expectedErrorMessages)));
+    }
+
+    private void assertNoFEValidationError() {
+        List<WebElement> errorBlocks = driver.findElements(By.xpath("//div[@class='help-block with-errors']"));
+        for (WebElement errorBlock : errorBlocks) {
+            List<WebElement> li = errorBlock.findElements(By.tagName("li"));
+            assertTrue("Some error found by validations, expected: none.", li.isEmpty());
+        }
+    }
+
+    private void blur(String cssSelector) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String blurInJs = String.format("var x = $(\'%s\');x.blur();", cssSelector);
+        js.executeScript(blurInJs);
     }
 }
